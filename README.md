@@ -130,3 +130,8 @@ $code-border-radius             = 4px
 $code-background                = $my-code-background
 $code-foreground                = $my-code-foreground
 ```
++ 文件：`theme/next/source/css/_schemes/Mist/_posts-expanded.styl`
++ 内容:
+```
+.post-body img {margin: 0 auto;}
+```
