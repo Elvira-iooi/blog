@@ -28,23 +28,6 @@ menu:
 <script type="text/javascript" src="/js/src/particle.js"></script>
 <script type="text/javascript" src="/js/src/love.js"></script>
 ```
-+ 文件：`theme/next/layout/_partials/footer.swig`
-+ 内容：
-```
-<div>
-  <span class="author" itemprop="copyrightHolder">{{ config.author }}</span>
-  <span>&nbsp;&nbsp;<a href="http://www.miitbeian.gov.cn/">蜀ICP备17004598号</a> </span>
-</div>
-
-<div>
-<span id="busuanzi_container_site_pv">
-    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次，
-</span>
-<span id="busuanzi_container_site_uv">
-  本站访客数 <span id="busuanzi_value_site_uv"></span> 人次
-</span>
-</div>
-```
 + 文件：`theme/next/layout/_partials/head/external-fonts.swig`
 + 内容：
 ```
