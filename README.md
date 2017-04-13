@@ -3,26 +3,34 @@
 
 # 流程
 + 拉取博客
+```
 git clone git@github.com:YuXiaoCoder/blog.git
+```
 + 切换目录
+```
 cd blog/
+```
 + 拉取主题
+```
 git clone https://github.com/iissnan/hexo-theme-next themes/next
-
+```
 
 # 个性化
-+ 文件：theme/next/languages/zh-Hans.yml
++ 文件：`theme/next/languages/zh-Hans.yml`
 + 内容：
+```
 menu:
   messages: 留言
-
-+ 文件：theme/next/layout/_layout.swig
+```
++ 文件：`theme/next/layout/_layout.swig`
 + 内容：
+```
 <script type="text/javascript" src="/js/src/particle.js"></script>
 <script type="text/javascript" src="/js/src/love.js"></script>
-
-+ 文件：theme/next/layout/_partials/footer.swig
+```
++ 文件：`theme/next/layout/_partials/footer.swig`
 + 内容：
+```
 <div>
   <span class="author" itemprop="copyrightHolder">{{ config.author }}</span>
   <span>&nbsp;&nbsp;<a href="http://www.miitbeian.gov.cn/">蜀ICP备17004598号</a> </span>
@@ -36,16 +44,18 @@ menu:
   本站访客数 <span id="busuanzi_value_site_uv"></span> 人次
 </span>
 </div>
-
-+ 文件：theme/next/layout/_partials/head/external-fonts.swig
+```
++ 文件：`theme/next/layout/_partials/head/external-fonts.swig`
 + 内容：
+```
 {% if font_families !== '' %}
   {% set font_host = font_config.host | default('//fonts.lug.ustc.edu.cn') %}
 {% endif %}
+```
 
-
-+ 文件：theme/next/source/css/_custom/custom.styl
++ 文件：`theme/next/source/css/_custom/custom.styl`
 + 内容：
+```
 // Custom styles.
 //首页文章阴影样式
 .post {
@@ -111,9 +121,10 @@ a {
     background-color: #58B2DC;
     color: #f5f5f5;
 }
-
-+ 文件：theme/next/source/css/_variables/base.styl
+```
++ 文件：`theme/next/source/css/_variables/base.styl`
 + 内容：
+```
 // Global link color.
 //$link-color                   = $black-light
 //$link-hover-color             = $black-deep
@@ -135,3 +146,4 @@ $code-border-radius             = 4px
 //$code-background                = $gainsboro
 $code-background                = $my-code-background
 $code-foreground                = $my-code-foreground
+```
