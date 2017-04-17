@@ -18,6 +18,7 @@ tags: [Docker]
 + 我们将搭建一个包含6个节点的Docker应用栈，其中包括一个负载均衡代理节点、两个Web应用节点、一个主数据库节点及两个从数据库节点。
 {% asset_img AppStack.jpg 应用栈结构图 %}
 + 获取镜像
+
 ```bash
 # 获取Ubuntu镜像
 $ docker pull ubuntu:14.04
@@ -39,6 +40,7 @@ $ docker images
 
 ## 搭建指导
 ### 启动各节点并互连
+
 ```bash
 # 请总共打开宿主机的7个终端, 每个终端连接一个容器
 # 启动redis数据库节点
@@ -61,9 +63,12 @@ $ docker ps
 ```
 ### 配置redis数据库，在宿主机上创建`redis`数据库的配置文件
 + `redis-master`配置文件
+
 ```bash
 $ vim redis-master.conf
+```
 
+```text
 # 文件内容
 daemonize yes
 pidfile /var/run/redis.pid
@@ -95,9 +100,12 @@ zset-max-ziplist-value 128
 activerehashing yes
 ```
 + `redis-slave`配置文件
+
 ```bash
 $ vim redis-slave.conf
+```
 
+```text
 # 文件内容
 daemonize yes
 pidfile /var/run/redis.pid
@@ -130,7 +138,8 @@ zset-max-ziplist-value 128
 activerehashing yes
 ```
 + 配置redis数据库(未简化)
-```bash
+
+```text
 # 适用于1.12版本及以上
 ## 获取数据卷的挂载点
 $ docker inspect -f '{{ .Mounts }}' redis-master
@@ -146,6 +155,7 @@ $ cp redis-slave.conf <redis-slave1的挂载点>
 $ cp redis-slave.conf <redis-slave2的挂载点>
 ```
 + 配置redis数据库(简化版)
+
 ```bash
 # Docker版本：1.12
 ## 拷贝配置文件
@@ -165,6 +175,7 @@ $ cp redis-slave.conf $(docker inspect -f '{{ .Mounts }}' redis-slave2 | \
     awk '{print $3}')
 ```
 + 测试操作
+
 ```bash
 # 在redis-master节点
 $ cp /data/redis-master.conf /usr/local/bin/redis.conf
@@ -186,17 +197,23 @@ $ redis-cli
 ### 配置Web APP节点
 #### 在Web APP节点上
 + 安装redis模块
+
 ```bash
 $ pip install redis
 ```
 + 测试操作
+
 ```bash
 $ python
->>> import redis
->>> print(redis.__file__)
->>> exit()
+```
+
+```python
+import redis
+print(redis.__file__)
+exit()
 ```
 + 创建Hello-World的APP
+
 ```bash
 $ cd /usr/src/app
 $ mkdir dockerweb
@@ -207,15 +224,18 @@ $ python manage.py startapp helloworld
 ```
 #### 在宿主机上
 + 切换目录
+
 ```bash
 $ cd ~/Projects/Django/App1/dockerweb/redisweb/
 $ cd ~/Projects/Django/App2/dockerweb/redisweb/
 ```
 + 配置视图(View)
+
 ```bash
 $ vim helloworld/views.py
+```
 
-# 文件内容
+```python
 from django.shortcuts import render
 from django.http import HttpResponse
 import redis
@@ -230,20 +250,25 @@ def hello(requset):
     return HttpResponse(str)
 ```
 + 更改配置文件
+
 ```bash
 $ vim redisweb/settings.py
+```
 
+```python
 # 文件内容
 ALLOWED_HOSTS = ['*',]
 INSTALLED_APPS = [
-    ...
     'helloworld',
 ]
 ```
 + 配置url
+
 ```bash
 $ vim redisweb/urls.py
+```
 
+```python
 # 文件内容
 from django.conf.urls import url
 from django.contrib import admin
@@ -256,11 +281,13 @@ urlpatterns = [
 ```
 #### 在Web APP节点上
 + 初始化项目
+
 ```bash
 $ python manage.py makemigrations
 $ python manage.py migrate
 ```
 + 启动服务
+
 ```bash
 # APP1:
 $ python manage.py runserver 0.0.0.0:8001
@@ -270,13 +297,16 @@ $ python manage.py runserver 0.0.0.0:8002
 ### 配置HAProxy节点
 #### 在宿主机上
 + 切换目录
+
 ```bash
 $ cd ~/Projects/HAProxy/
 ```
 + 创建配置文件
+
 ```bash
 $ vim haproxy.cfg
-
+```
+```text
 # 文件内容
 global
     log 127.0.0.1   local0
@@ -308,20 +338,28 @@ listen redis_proxy
         server APP2 APP2:8002 check inter 2000 rise 2 fall 5
 ```
 #### 在HAProxy节点
+
 + 切换目录
+
 ```bash
 $ cd /tmp
 ```
+
 + 复制配置文件
+
 ```bash
 $ cp haproxy.cfg /usr/local/sbin
 
 ```
+
 + 切换目录
+
 ```bash
 $ cd /usr/local/sbin
 ```
+
 + 启动服务
+
 ```bash
 $ haproxy -f haproxy.cfg
 ```

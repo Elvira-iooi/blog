@@ -71,6 +71,7 @@ docker ps --help
 + 格式：`docker search [OPTION] NAME`
 + 选项
     + `--limit NUM`：定义搜索到的最大结果数，默认为25；
+    + `-s NUM`：仅显示至少有NUM次收藏的镜像；
 
 ### 拉取镜像
 + 格式：`docker pull [OPTION] NAME[:TAG]`
@@ -105,18 +106,22 @@ docker ps --help
     ```bash
     $ docker load -i ubuntu_14.04.tar
     ```
+
 ### 为镜像设置新的标签
 + 格式：`docker tag OLDIMAGE[:TAG] NEWIMAGE[:TAG]`
+
 ### 使用Dockerfile构建镜像
 + 格式：`docker build [OPTIONS] PATH|URL|-`
 + 选项：``
     + `-q`：使用静默模式构建；
     + `--no-cache`：构建过程中不使用缓存；
     + `-t TAG`：为镜像设置标签；
+
 ### 获取本地的容器
 + 格式：`docker ps [OPTION]`
 + 选项：
     + `-a`：获取所有的容器，默认仅显示运行中的容器；
+
 ### 创建容器
 + 格式：`docker create [OPTIONS] IMAGE [COMMAND] [ARG...]`
 + 选项：
@@ -128,6 +133,7 @@ docker ps --help
 + 选项格式：
     + `-v`：`[host-dir]:[container-dir]:[rw|ro]`
     + `-p`：`[host-port]:[container-port]`
+
 ### 运行容器
 + 格式：`docker run [OPTION] IMAGE [COMMAND] [ARG ...]`
 + 选项：
@@ -148,56 +154,95 @@ docker ps --help
     ```bash
     $ docker run -it ubuntu /bin/bash
     ```
+
 ### 启动容器
 + 格式：`docker start [OPTIONS] CONTAINER [CONTAINER ...]`
+
 ### 停止容器
 + 格式：`docker stop [OPTIONS] CONTAINER [CONTAINER ...]`
+
 ### 重启容器
 + 格式：`docker restart [OPTIONS] CONTAINER [CONTAINER ...]`
+
+### 终止容器
++ 格式：`docker kill [OPTIONS] CONTAINER [CONTAINER...]`
+
 ### 获取容器的日志
 + 格式：`docker logs [OPTION] CONTAINER`
 + 选项：
     + `-f`：跟随日志尾部，实时输出；
     + `-t`：为每一条日志加上时间戳；
     + `--details`：获取详细的日志信息；
+
 ### 获取容器的进程
 + 格式：`docker top CONTAINER`
+
 ### 获取对容器文件系统的更改
 + 格式：docker diff CONTAINER
 + 状态：
     + `A`：已添加的文件；
     + `D`：已删除的文件；
     + `C`：已更改的文件；
+
 ### 删除容器
 + 格式：`docker rm [OPTIONS] CONTAINER [CONTAINER ...]`
 + 选项：
     + `-f`：强制删除正在运行的容器；
     + `-l`：删除与容器关联的链接；
     + `-v`：删除与容器关联的`volumes`；
+
 ### 从容器中复制文件到宿主机
 + 格式：`docker cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|-`
+
 ### 执行1条命令在1个正在运行的容器
 + 格式：`docker exec [OPTIONS] CONTAINER COMMAND [ARG ...]`
 + 选项：
     + `-d`：使用分离模式，在后台运行命令；
     + `-i`：使用交互模式，始终保持输入流`STDIN`开放；
     + `-t`：分配一个伪终端，一般与-i选项配合使用；
-### 导出容器的快照
+
+### 导出容器快照至本地文件
 + 格式：`docker export [OPTIONS] CONTAINER`
 + 选项：
     + `-o`：指定输出的镜像归档名；
+
+### 导入容器快照至本地镜像
++ 格式：`docker import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]`
++ 示例：
+    + 从远程URL导入
+    ```bash
+    $ docker import http://example.com/exampleimage.tgz
+    ```
+    + 从本地文件导入(通过`pipe`和`STDIN`)
+    ```bash
+    $ cat exampleimage.tgz | docker import - exampleimagelocal:new
+    ```
+    + 从本地文件导入(通过归档文件)
+    ```bash
+    $ docker import /path/to/exampleimage.tgz
+    ```
+
 ### 获取镜像或容器的详细信息
 + 格式：`docker inspect [OPTIONS] CONTAINER|IMAGE [CONTAINER|IMAGE]`
++ 选项：
+    + `-f`：获取指定内容；
++ 示例：
+    + 获取镜像的`Architecture`信息
+    ```bash
+    $ docker inspect -f {{".Architecture"}} ID
+    ```
 
 ## 小技巧
 ### 停止本地所有的正在运行的容器
 ```bash
 $ docker stop $(docker ps | awk '{if(NR>1){print $1;}}')
 ```
+
 ### 删除本地所有的容器
 ```bash
 $ docker rm $(docker ps -a | awk '{if(NR>1){print $1;}}')
 ``` 
+
 ### 删除本地所有的镜像
 ```bash
 $ docker rmi -f $(docker images | awk '{if(NR>1){print $3;}}')
@@ -205,3 +250,5 @@ $ docker rmi -f $(docker images | awk '{if(NR>1){print $3;}}')
 
 ## 快捷键
 + `Ctrl + P +Q`：退出交互式但不结束容器；
+
+***
