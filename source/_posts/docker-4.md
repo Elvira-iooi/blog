@@ -61,6 +61,7 @@ $ docker run -it --name HAProxy --link APP1:APP1 --link APP2:APP2 -p 6301:6301 \
 # 查看运行中的容器
 $ docker ps
 ```
+
 ### 配置redis数据库，在宿主机上创建`redis`数据库的配置文件
 + `redis-master`配置文件
 

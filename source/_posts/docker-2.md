@@ -46,6 +46,7 @@ tags: [Docker]
 ### 获取帮助信息
 + 格式：`docker --help`
 + 获取子命令的帮助信息
+
 ```bash
 # 格式一
 docker help ps
@@ -128,11 +129,13 @@ docker ps --help
     + `-i`：使用交互模式，始终保持输入流`STDIN`开放；
     + `-t`：分配一个伪终端，一般与-i选项配合使用；
     + `-v`：用于挂载一个`volume`，可以使用多个`-v`同时挂载多个`volume`；
+    + `--volumes-from`：用于挂载一个数据卷容器，可以使用多个`--volumes-from`同时挂载多个数据卷容器；
     + `-p`：用于将容器的端口与宿主机的端口之间形成映射；
     + `--name NAME`：指定启动容器的名称，默认为指定随机名称；
 + 选项格式：
     + `-v`：`[host-dir]:[container-dir]:[rw|ro]`
     + `-p`：`[host-port]:[container-port]`
+    + `--volumes-from`：`value`
 
 ### 运行容器
 + 格式：`docker run [OPTION] IMAGE [COMMAND] [ARG ...]`
@@ -233,17 +236,18 @@ docker ps --help
     ```
 
 ## 小技巧
-### 停止本地所有的正在运行的容器
++ 停止本地所有的正在运行的容器
+
 ```bash
 $ docker stop $(docker ps | awk '{if(NR>1){print $1;}}')
 ```
 
-### 删除本地所有的容器
++ 删除本地所有的容器
 ```bash
 $ docker rm $(docker ps -a | awk '{if(NR>1){print $1;}}')
 ``` 
 
-### 删除本地所有的镜像
++ 删除本地所有的镜像
 ```bash
 $ docker rmi -f $(docker images | awk '{if(NR>1){print $3;}}')
 ``` 

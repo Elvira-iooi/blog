@@ -79,12 +79,15 @@ menu:
 .post-toc .nav .active>a {
     color: #4f7e96;
 }
+
 .post-toc ol a:hover {
     color: #7784ba;
 }
+
 .sidebar-nav .sidebar-nav-active:hover {
     color: #37596c;
 }
+
 a {
     border-bottom: none;
 }
@@ -92,17 +95,27 @@ a {
 .post-nav {
     border-top: 1px solid #58B2DC;
 }
+
 .posts-expand .post-tags {
     text-align: center;
 }
+
 .posts-expand .post-tags a {
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     font-family: 'Comic Sans MS', sans-serif;
     transition: 0.2s ease-out;
 }
+
 .posts-expand .post-tags a:hover {
     background-color: #58B2DC;
     color: #f5f5f5;
+}
+
+.posts-expand .post-title:hover {
+    border-left: #7DB9DE 20px solid;
+    padding-left: 15px;
+    cursor: pointer;
+    transition: border-width 0.3s linear 0.1s, color 0.2s linear 0.3s;
 }
 ```
 + 文件：`theme/next/source/css/_variables/base.styl`

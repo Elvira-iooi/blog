@@ -18,6 +18,7 @@ tags: [Nginx, Install]
 
 ## 安装指导
 + 查看内核版本
+
 ```bash
 $ uname -a
 ```
@@ -25,40 +26,49 @@ $ uname -a
 + 将软件包下载完后，使用远程FTP工具`Xftp 5`将软件包上传至服务器；
 ### Ubuntu系统
 + 安装编译套件
+
 ```bash
 $ apt-get -y install build-essential
 ```
 ### CentOS系统
 + 安装编译套件
+
 ```bash
 $ yum -y groupinstall "Development Tools"
 ```
 ### CentOS/Ubuntu系统
 + 解压`PCRE`库
+
 ```bash
 $ tar -zxvf pcre-8.40.tar.gz
 ```
 + 解压`zlib`库
+
 ```bash
 $ tar -zxvf zlib-1.2.11.tar.gz
 ```
 + 解压`openssl`库
+
 ```bash
 $ tar -zxvf openssl-1.0.2k.tar.gz
 ```
 + 解压`nginx`
+
 ```bash
 $ tar -zxvf nginx-1.10.3.tar.gz
 ```
 + 添加`nginx`用户及用户组
+
 ```bash
 $ groupadd -r nginx && useradd -r -g nginx -s /sbin/nologin nginx
 ```
 + 切换目录
+
 ```bash
 $ cd nginx-1.10.3
 ```
 + 预编译
+
 ```bash
 $ ./configure --prefix=/usr/local/nginx \
     --pid-path=/var/run/nginx.pid \
@@ -84,29 +94,35 @@ $ ./configure --prefix=/usr/local/nginx \
     --with-debug
 ```
 + 编译并安装
+
 ```bash
 # 单个CPU
 $ make && make install
+
 # 多个CPU(多进程编译，加速编译)
 $ make -j 4 && make install
 ```
 + 创建相关目录
+
 ```bash
 $ mkdir -p /var/tmp/nginx/{client,proxy,fastcgi,uwsgi,scgi}
 ```
 + 创建软链接
+
 ```bash
 $ ln -s /usr/local/nginx/sbin/nginx /usr/sbin
 ```
 
 ## 提供`Sysv init`脚本
 + 创建脚本
+
 ```bash
 # 不适用于Ubuntu16.04
 $ touch /etc/init.d/nginx
 ```
 + 文件内容
-```bash
+
+```text
 #!/bin/sh
 #
 # nginx - this script starts and stops the nginx daemon
@@ -217,36 +233,45 @@ case "$1" in
 esac
 ```
 + 为脚本赋予权限
+
 ```bash
 $ chmod 755 /etc/init.d/nginx
 ```
 ### CentOS/Ubuntu系统
 + 配置Nginx服务开机自启
+
 ```bash
 $ vim /etc/rc.local
+```
 
-# 添加运行命令
+```text
+# 文件内容，添加运行命令
 /usr/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
 ```
 ### CentOS系统
 + 使用`chkconfig`命令管理
+
 ```bash
 # 添加到服务列表
 $ chkconfig --add nginx
+
 # 设置开机自启动
 $ chkconfig nginx on
 ```
 
 ## 测试步骤
 + 启动`nginx`服务
+
 ```bash
 $ service nginx start
 ```
 + 查看`nginx`进程
+
 ```bash
 $ ps aux | grep "nginx"
 ```
 + 查看端口号
+
 ```bash
 $ netstat -nlput | grep "nginx"
 ```
@@ -278,35 +303,43 @@ $ netstat -nlput | grep "nginx"
 
 ## 原始命令
 + 启动`nginx`服务
+
 ```bash
 $ nginx [-c PATH]
 ```
 + 检查配置文件是否正确
+
 ```bash
 $ nginx -t [-c PATH]
 ```
 + 重新加载配置文件
+
 ```bash
 $ nginx -s reload
 ```
 + 日志文件回滚
+
 ```bash
 # 重新打开日志文件，切割日志，防止日志文件过大
 $ nginx -s reopen
 ```
 + 优雅地停止Nginx
+
 ```bash
 $ nginx -s quit
 ```
 + 快速地停止Nginx(不推荐)
+
 ```bash
 $ nginx -s stop
 ```
 + 获取版本信息
+
 ```bash
 $ nginx -v
 ```
 + 获取编译时的参数
+
 ```bash
 $ nginx -V
 ```
@@ -317,10 +350,10 @@ $ nginx -V
 + 使用`nginx -s reopen`命令重新打开日志文件，则将新的日志信息写入到新文件，实现了日志的切割；
 
 ## 平滑升级Nginx
-+ 平滑升级步骤：
 + `Nginx`支持不重启服务来完成新版本的平滑升级；
 + 通知正在运行的旧版本`Nginx`准备升级，通过向`master`进程发送`SIGUSR2`信号可达到目的，此时旧版本的`PID`文件会由`nginx.pid`重命名为`nginx.pid.oldbin`；
 + 发送`SIGUSR2`信号
+
 ```bash
 # 使用PID文件的路径代替<Nginx Master PID>
 $ kill -s SIGUSR2 <Nginx Master PID>
@@ -328,6 +361,7 @@ $ kill -s SIGUSR2 <Nginx Master PID>
 + 启动新版本的`Nginx`，这时新旧版本的`Nginx`在同时运行；
 + 向旧版本的`master`进程发送`SIGQUIT`信号，以优雅的方式关闭旧版本的`Nginx`；
 + 发送`SIGQUIT`信号
+
 ```bash
 # 使用PID文件的路径代替<Nginx Master PID>
 $ kill -s SIGQUIT <Nginx Master PID>
