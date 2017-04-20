@@ -15,11 +15,14 @@ tags: [Docker, Install]
 <!-- more -->
 
 ## 准备工作
+
 + 检查当前系统的内核版本信息
+
 ```bash
 $ uname -r
 ```
 ### Ubuntu系统
+
 + 更新软件包的索引列表
 
 ```bash
@@ -85,6 +88,7 @@ $ yum install -y yum-utils
 ```
 
 + 添加稳定Docker存储库
+
 ```bash
 $ yum-config-manager \
     --add-repo \
@@ -98,6 +102,7 @@ $ yum-config-manager --enable docker-testing
 ```
 
 + 禁用Docker的测试库(推荐)
+
 ```bash
 $ yum-config-manager --disable docker-testing
 ```
@@ -107,6 +112,7 @@ $ yum-config-manager --disable docker-testing
 ### Ubuntu系统
 
 + 更新软件包的索引列表
+
 ```bash
 $ apt-get update
 ```
@@ -136,6 +142,9 @@ $ apt-get -y install docker-engine
 + 启动Docker服务
 
 ```bash
+# Ubuntu-14
+$ service start docker
+# Ubuntu-16
 $ systemctl start docker
 ```
 
@@ -143,7 +152,9 @@ $ systemctl start docker
 
 ```bash
 # 卸载软件包
-$ yum -y remove docker-engine
+$ apt-get purge docker-engine
+# 卸载软件包并移除不再需要的依赖项
+$ apt-get autoremove --purge docker-engine
 # 删除遗留的文件
 $ rm -rf /var/lib/docker
 ```
@@ -207,7 +218,7 @@ $ docker -v
 $ docker version
 ```
 
-## 配置DaoCloud的Docker加速器(国内registry-mirror)
+## 配置Docker加速器
 1. 由于众所周知的原因(墙)，从`Docker Hub`难以高效地下载镜像，除了使用VPN或代理之外，
 最为有效的方式就是使用Docker国内镜像；
 2. `DaoCloud`为首个提供国内免费`Docker Hub`镜像的团体，可以使用DaoCloud团队提供的
@@ -237,3 +248,5 @@ $ service docker restart
 ```bash
 $ systemctl restart docker
 ```
+
+***
