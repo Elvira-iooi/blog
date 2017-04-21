@@ -10,12 +10,15 @@ tags: [Resource]
 <!-- more -->
 
 ## Ubuntu系统
+
 + 编辑配置文件
+
 ```bash
 $ vim /etc/apt/sources.list
 ```
 + Ubuntu-14.04(阿里云源)
-```bash
+
+```text
 # 软件仓库与源码仓库
 deb http://mirrors.aliyun.com/ubuntu/ trusty main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ trusty main restricted universe multiverse
@@ -31,7 +34,8 @@ deb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main restricted unive
 # deb-src http://mirrors.aliyun.com/ubuntu/ trusty-proposed main restricted universe multiverse
 ```
 + Ubuntu-14.04(中科大源)
-```bash
+
+```text
 # 软件仓库与源码仓库
 deb https://mirrors.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
 deb-src https://mirrors.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
@@ -47,7 +51,8 @@ deb-src https://mirrors.ustc.edu.cn/ubuntu/ trusty-backports main restricted uni
 # deb-src https://mirrors.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
 ```
 + Ubuntu-16.04(阿里云源)
-```bash
+
+```text
 # 软件仓库与源码仓库
 deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse
@@ -63,7 +68,8 @@ deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted unive
 # deb-src http://mirrors.aliyun.com/ubuntu/ xenial-proposed main restricted universe multiverse
 ```
 + Ubuntu-16.04(中科大源)
-```bash
+
+```text
 # 软件仓库与源码仓库
 deb https://mirrors.ustc.edu.cn/ubuntu/ xenial main restricted universe multiverse
 deb-src https://mirrors.ustc.edu.cn/ubuntu/ xenial main main restricted universe multiverse
@@ -79,24 +85,29 @@ deb-src https://mirrors.ustc.edu.cn/ubuntu/ xenial-security main restricted univ
 # deb-src https://mirrors.ustc.edu.cn/ubuntu/ xenial-proposed main restricted universe multiverse
 ```
 + 更新软件包索引
+
 ```bash
 $ apt-get update
 ```
 
 ## CentOS系统
 + 编辑配置文件
+
 ```bash
 $ vim /etc/yum.repos.d/CentOS-Base.repo
 ```
 + CentOS-6(阿里云源)
+
 ```bash
 # 若无wget命令, 可使用以下命令安装
 $ yum -y install wget
 # 使用wget下载
 $ wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo
 ```
+
 + CentOS-6(中科大源)
-```bash
+
+```text
 # CentOS-Base.repo
 #
 # The mirror system uses the connecting IP address of the client and the
@@ -151,14 +162,17 @@ enabled=0
 gpgkey=https://mirrors.ustc.edu.cn/centos/RPM-GPG-KEY-CentOS-6
 ```
 + CentOS-7(阿里云源)
+
 ```bash
 # 若无wget命令, 可使用以下命令安装
-yum -y install wget
+$ yum -y install wget
 # 使用wget下载
-wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+$ wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
 ```
+
 + CentOS-7(中科大源)
-```bash
+
+```text
 # CentOS-Base.repo
 #
 # The mirror system uses the connecting IP address of the client and the
@@ -203,7 +217,11 @@ gpgcheck=1
 enabled=0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 ```
+
 + 更新软件包索引
+
 ```bash
 $ yum makecache
 ```
+
+***
