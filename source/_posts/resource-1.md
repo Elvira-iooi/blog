@@ -11,6 +11,12 @@ tags: [Resource]
 
 ## Ubuntu系统
 
++ 若要使用`https`协议的源，请安装以下软件
+
+```bash
+$ apt-get install -y apt-transport-https
+```
+
 + 编辑配置文件
 
 ```bash
@@ -20,14 +26,15 @@ $ vim /etc/apt/sources.list
 
 ```text
 # 软件仓库与源码仓库
+# 默认注释了源码镜像以提高<apt update>速度，如有需要可自行取消注释
 deb http://mirrors.aliyun.com/ubuntu/ trusty main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ trusty main restricted universe multiverse
+# deb-src http://mirrors.aliyun.com/ubuntu/ trusty main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ trusty-security main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ trusty-security main restricted universe multiverse
+# deb-src http://mirrors.aliyun.com/ubuntu/ trusty-security main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ trusty-updates main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ trusty-updates main restricted universe multiverse
+# deb-src http://mirrors.aliyun.com/ubuntu/ trusty-updates main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ trusty-backports main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main restricted universe multiverse
+# deb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main restricted universe multiverse
 
 # 预发布软件源，不建议启用
 # deb http://mirrors.aliyun.com/ubuntu/ trusty-proposed main restricted universe multiverse
@@ -37,53 +44,96 @@ deb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main restricted unive
 
 ```text
 # 软件仓库与源码仓库
-deb https://mirrors.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
+# 默认注释了源码镜像以提高<apt update>速度，如有需要可自行取消注释
+deb http://mirrors.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
+# deb-src http://mirrors.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
+deb http://mirrors.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
+# deb-src http://mirrors.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
+deb http://mirrors.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
+# deb-src http://mirrors.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
+deb http://mirrors.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
+# deb-src http://mirrors.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
 
 # 预发布软件源，不建议启用
-# deb https://mirrors.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
-# deb-src https://mirrors.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
+# deb http://mirrors.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
+# deb-src http://mirrors.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
 ```
+
++ Ubuntu-14.04(清华大学源)
+
+```text
+# 软件仓库与源码仓库
+# 默认注释了源码镜像以提高<apt update>速度，如有需要可自行取消注释
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
+
+# 预发布软件源，不建议启用
+# deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
+```
+
 + Ubuntu-16.04(阿里云源)
 
 ```text
 # 软件仓库与源码仓库
 deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse
+# deb-src http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse
+# deb-src http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse
+# deb-src http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse
+# deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse
 
 # 预发布软件源，不建议启用
 # deb http://mirrors.aliyun.com/ubuntu/ xenial-proposed main restricted universe multiverse
 # deb-src http://mirrors.aliyun.com/ubuntu/ xenial-proposed main restricted universe multiverse
 ```
+
 + Ubuntu-16.04(中科大源)
 
 ```text
 # 软件仓库与源码仓库
-deb https://mirrors.ustc.edu.cn/ubuntu/ xenial main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ xenial main main restricted universe multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu/ xenial-updates main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ xenial-updates main restricted universe multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu/ xenial-backports main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ xenial-backports main restricted universe multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu/ xenial-security main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ xenial-security main restricted universe multiverse
+# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+deb http://mirrors.ustc.edu.cn/ubuntu/ xenial main restricted universe multiverse
+# deb-src http://mirrors.ustc.edu.cn/ubuntu/ xenial main main restricted universe multiverse
+deb http://mirrors.ustc.edu.cn/ubuntu/ xenial-updates main restricted universe multiverse
+# deb-src http://mirrors.ustc.edu.cn/ubuntu/ xenial-updates main restricted universe multiverse
+deb http://mirrors.ustc.edu.cn/ubuntu/ xenial-backports main restricted universe multiverse
+# deb-src http://mirrors.ustc.edu.cn/ubuntu/ xenial-backports main restricted universe multiverse
+deb http://mirrors.ustc.edu.cn/ubuntu/ xenial-security main restricted universe multiverse
+# deb-src http://mirrors.ustc.edu.cn/ubuntu/ xenial-security main restricted universe multiverse
 
 # 预发布软件源，不建议启用
-# deb https://mirrors.ustc.edu.cn/ubuntu/ xenial-proposed main restricted universe multiverse
-# deb-src https://mirrors.ustc.edu.cn/ubuntu/ xenial-proposed main restricted universe multiverse
+# deb http://mirrors.ustc.edu.cn/ubuntu/ xenial-proposed main restricted universe multiverse
+# deb-src http://mirrors.ustc.edu.cn/ubuntu/ xenial-proposed main restricted universe multiverse
 ```
+
++ Ubuntu-16.04(清华大学源)
+
+```text
+# 软件仓库与源码仓库
+# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-updates main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-backports main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-backports main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-security main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-security main restricted universe multiverse
+
+# 预发布软件源，不建议启用
+# deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-proposed main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-proposed main restricted universe multiverse
+```
+
 + 更新软件包索引
 
 ```bash

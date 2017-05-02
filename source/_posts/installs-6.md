@@ -52,7 +52,7 @@ $ ./install
 + 选择序号进行安装，安装`MySQL`需要设置初始密码；
 + 脚本会替换软件源，故在云服务器上可能出错；
 
-## 仅安装`Nginx`
+## 仅安装或升级`Nginx`
 + 下载`Nginx`脚本包：
     + [百度云链接](http://pan.baidu.com/s/1gf44cld)，密码：`1lxk`；
     + [七牛云链接](http://olxczlg18.bkt.clouddn.com/nginx.tgz)；
@@ -77,8 +77,7 @@ $ cd nginx
 $ ./install
 ```
 
-+ 脚本中不替换软件源，可在任何CentOS/Ubuntu(包括云服务器)上进行安装；
-+ _**平滑升级`Nginx`的脚本，还在编写中，请耐心等待；**_
++ 脚本中默认不替换软件源，可在任何`CentOS/Ubuntu`(包括云服务器)上进行安装；
 + 在脚本使用过程中，若出现`错误`，请联系我，我会积极做出更正；
 
 ***

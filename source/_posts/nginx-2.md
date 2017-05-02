@@ -18,45 +18,48 @@ tags: [Nginx]
 
 ## Linux内核参数优化
 + 此处提供最通用的、使`Nginx`支持更多并发请求的`TCP`网络参数优化
+
 ```bash
 $ vim /etc/sysctl.conf
- 
-# 文件内容
-## 表示进程可以同时打开的最大句柄数，直接限制最大并发连接数
+```
+
+```text
+# 表示进程可以同时打开的最大句柄数，直接限制最大并发连接数
 fs.file-max = 999999
-## 允许将TIME-WAIT状态的socket重新用于新的TCP连接
+# 允许将TIME-WAIT状态的socket重新用于新的TCP连接
 net.ipv4.tcp_tw_reuse = 1
-## TCP发送[kbd]keepalive[/kbd]消息的频度，默认为2小时，
-## 将其设置的小一些，有利于更快地清理无效的连接
+# TCP发送[kbd]keepalive[/kbd]消息的频度，默认为2小时，
+# 将其设置的小一些，有利于更快地清理无效的连接
 net.ipv4.tcp_keepalive_time = 600
-## 当服务器主动关闭连接时，socket保持FIN-WAIT-2状态的最大时间
+# 当服务器主动关闭连接时，socket保持FIN-WAIT-2状态的最大时间
 net.ipv4.tcp_fin_timeout = 30
-## 允许状态为TIME-WAIT的socket的最大数量，
-## 默认为180000，过多会使Web服务器变慢
+# 允许状态为TIME-WAIT的socket的最大数量，
+# 默认为180000，过多会使Web服务器变慢
 net.ipv4.tcp_max_tw_buckets = 5000
-## 定义TCP和UDP连接在本地端口的取值范围
+# 定义TCP和UDP连接在本地端口的取值范围
 net.ipv4.ip_local_port_range = 1024 61000
-## 定义TCP接收缓存的最小值、默认值、最大值
+# 定义TCP接收缓存的最小值、默认值、最大值
 net.ipv4.tcp_rmem = 4096 32768 262142
-## 定义TCP发送缓存的最小值、默认值、最大值
+# 定义TCP发送缓存的最小值、默认值、最大值
 net.ipv4.tcp_wmem = 4096 32768 262142
-## 当网卡接收数据包的速度大于内核处理的速度时，会产生一个队列
-## 用于保存数据包，该参数定义队列的最大值
+# 当网卡接收数据包的速度大于内核处理的速度时，会产生一个队列
+# 用于保存数据包，该参数定义队列的最大值
 net.core.netdev_max_backlog = 8096
-## 内核socket接收缓存区默认的大小
+# 内核socket接收缓存区默认的大小
 net.core.rmem_default = 262144
-## 内核socket发送缓存区默认的大小
+# 内核socket发送缓存区默认的大小
 net.core.wmem_default = 262144
-## 内核socket接收缓存区最大的大小
+# 内核socket接收缓存区最大的大小
 net.core.rmem_max = 2097152
-## 内核socket发送缓存区最大的大小
+# 内核socket发送缓存区最大的大小
 net.core.wmem_max = 2097152
-## 与性能无关，用于解决TCP的SYN攻击
+# 与性能无关，用于解决TCP的SYN攻击
 net.ipv4.tcp_syncookies = 1
-## TCP三次握手建立阶段接收SYN请求队列的最大长度，默认为1024
+# TCP三次握手建立阶段接收SYN请求队列的最大长度，默认为1024
 net.ipv4.tcp_max_syn_backlog = 1024
 ```
 + 使参数生效
+
 ```bash
 $ sysctl -p
 ```
@@ -70,7 +73,8 @@ $ sysctl -p
 ## 配置说明
 + `Nginx`的配置项拆分为多个块配置，多个块配置协同提供服务；
 + 模块化配置
-```bash
+
+```text
 <section> {
     <directive> <parameters>;
 }
@@ -82,7 +86,8 @@ $ sysctl -p
     + 时间：`ms(毫秒)`、`s(秒)`、`m(分钟)`、`h(小时)`、`d(天)`、`w(周)`、`M(月)`、`y(年)`；
 
 ### 全局配置
-```bash
+
+```text
 # worker进程运行的用户及用户组
 user nginx nginx;
 # 指定错误日志的路径与级别
@@ -99,8 +104,10 @@ worker_cpu_affinity 1000 0100 0010 0001;
 # SSL硬件加速，使用openssl engine -t查看是否拥有加速设备
 ssl_engine device;
 ```
+
 ### events模块
-```bash
+
+```text
 events {
     # 选择事件模型
     use epoll;
@@ -110,9 +117,11 @@ events {
     multi_accept on;
 }
 ```
+
 ### http模块
 #### 结构
-```bash
+
+```text
 http {
        .....
        server    {
@@ -130,8 +139,10 @@ http {
        }
 }
 ```
+
 #### 虚拟主机实例
-```bash
+
+```text
 # 基于端口的虚拟主机
 http{
     server {
@@ -177,8 +188,10 @@ http{
 ```
 
 ### 访问控制模块
+
 + 自上而下进行检查，允许在`http`、`server`、`location`中配置；
-```bash
+
+```text
 # 语法：allow|deny  address | all;
 location /{
    # 设置资源路径
@@ -194,8 +207,10 @@ location /{
 ```
 
 ### 建立index站点的autoindex模块
+
 + 此模块为了便于用户下载站内的文件等，类似于`ftp`的功能；
-```bash
+
+```text
 location / {
     root /data/ftp;
     allow all;
@@ -217,11 +232,13 @@ location / {
     4. 如果其中某步`URI`被重写，则重新循环执行`1~3`，直到找到真实存在的文件；
     5. 如果循环超过`10`次，则返回`500 Internal Server Error`的错误；
 + 语法规则
-```bash
+
+```text
 rewrite regex replacement [flag];
 ```
 + 示例代码
-```bash
+
+```text
 # last：当规则被匹配并重写后，立即停止检查后续的rewrite规则并重新发起请求；
 # break：当规则被匹配并重写后，立即停止检查后续的rewrite规则并直接响应；
 # redirect：返回302，临时重定向；
@@ -238,20 +255,24 @@ location / {
 + 为了防止其他的网站盗用个人网站的图片、视频等资源，并给站点的服务器造成额外的负担；
 + `Nginx`使用`valid_referers`指令进行配置防盗链规则：
 + 符合规则的引用
-```bash
+
+```text
 # none：检测referer头域不存在的情况
 # blocked：检测referer头域的值被防火墙或者代理服务器删除或者伪装的情况，这种情况下该头域的值不以http或者https开头
 # server_names：设置一个或多个URL，可以使用通配符* 
 valid_referers none | blocked | server_names | string ...;
 ```
 + 不符合规则的引用
-```bash
+
+```text
 if ($invalid_referer) {
     rewrite ^/.*$ http://www.xiaocoder.com/403.html 
 }
 ```
+
 + 示例代码
-```bash
+
+```text
 location ~* \.(gif|jpg|png|swf|flv|rar|zip)$ {
     root /data/www/;
     valid_referers none blocked server_names *.xiaocoder.com;
@@ -267,7 +288,8 @@ location ~* \.(gif|jpg|png|swf|flv|rar|zip)$ {
 + `Nginx`将响应报文发送至客户端之前可以启用压缩功能，这能够有效地节约带宽，并提高响应至客户端的速度；
 + 通常编译`Nginx`默认会附带`gzip`压缩的功能，因此，可以直接启用之；
 + 示例代码
-```bash
+
+```text
 http {
     # 启用gzip压缩功能
     gzip on;

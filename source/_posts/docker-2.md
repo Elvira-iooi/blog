@@ -94,6 +94,7 @@ docker ps --help
 
 + 示例：
     + 将ubuntu镜像存为归档
+
     ```bash
     $ docker save -o ubuntu_14.04.tar ubuntu:14.04
     ```
@@ -104,6 +105,7 @@ docker ps --help
     + `-i NAME`：指定要加载的镜像归档；
 + 示例：
     + 将归档加载到本地镜像
+
     ```bash
     $ docker load -i ubuntu_14.04.tar
     ```
@@ -150,10 +152,12 @@ docker ps --help
     + `-p`：`[host-port]:[container-port]`
 + 示例
     + 运行hello-world容器
+
     ```bash
     $ docker run hello-word
     ```
     + 运行ubuntu容器并分配伪终端
+
     ```bash
     $ docker run -it ubuntu /bin/bash
     ```
@@ -213,14 +217,18 @@ docker ps --help
 + 格式：`docker import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]`
 + 示例：
     + 从远程URL导入
+
     ```bash
     $ docker import http://example.com/exampleimage.tgz
     ```
+
     + 从本地文件导入(通过`pipe`和`STDIN`)
+
     ```bash
     $ cat exampleimage.tgz | docker import - exampleimagelocal:new
     ```
     + 从本地文件导入(通过归档文件)
+
     ```bash
     $ docker import /path/to/exampleimage.tgz
     ```
@@ -231,6 +239,7 @@ docker ps --help
     + `-f`：获取指定内容；
 + 示例：
     + 获取镜像的`Architecture`信息
+
     ```bash
     $ docker inspect -f {{".Architecture"}} ID
     ```
@@ -243,14 +252,16 @@ $ docker stop $(docker ps | awk '{if(NR>1){print $1;}}')
 ```
 
 + 删除本地所有的容器
+
 ```bash
 $ docker rm $(docker ps -a | awk '{if(NR>1){print $1;}}')
-``` 
+```
 
 + 删除本地所有的镜像
+
 ```bash
 $ docker rmi -f $(docker images | awk '{if(NR>1){print $3;}}')
-``` 
+```
 
 ## 快捷键
 + `Ctrl + P +Q`：退出交互式但不结束容器；

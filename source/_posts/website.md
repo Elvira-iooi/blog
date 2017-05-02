@@ -61,6 +61,7 @@ tags: [Resource]
 ### 镜像站
 + 阿里云：[传送门](http://mirrors.aliyun.com/)；
 + USTC：[传送门](http://mirrors.ustc.edu.cn/)；
++ TUNA：[传送门](https://mirror.tuna.tsinghua.edu.cn/);
 + MSDN：[传送门](http://msdn.itellyou.cn/)；
 
 
