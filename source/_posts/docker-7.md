@@ -47,3 +47,52 @@ $ docker run -d -p 80:80 nginx
     + `Host-Port:Container-Port`
 
 ### 映射所有接口地址
+
++ 使用多个`-p`参数，映射多个本地端口到容器的端口；
+
+```bash
+$ docker run -d -p 80:80 -p 443:443 nginx
+```
+
+### 映射到指定地址的指定端口
+
++ 使用`IP:Host-Port:Container-Port`格式，映射到指定地址，适用于多个网络接口；
+
+```bash
+$ docker run  -d -p 127.0.0.1:80:80 nginx
+```
+
+## 容器互联实现容器间通信
+
++ 容器的连接系统是除端口映射外另一种可以与容器中服务进行交互的方式，互联的容器之间通过特有的`隧道`实现通信；
+
+### 自定义容器命名
+
++ 连接系统依据容器的名称来执行，因此，首先需要自定义一个容器命名；
++ 在创建容器时，默认会随机分配一个名字，但强烈建议自定义命名，便于管理；
++ 使用`--name`参数可以为容器自定义命名
+
+```bash
+$ docker run -d -p 80:80 --name nginx nginx
+```
+
+### 容器互联
+
++ 使用`--link`参数可以让容器之间安全的进行交互；
+
++ 创建一个新的`MySQL`数据库容器
+
+```bash
+$ docker run -d --name db mysql
+```
+
++ 创建一个新的`Web`容器并连接到`db`容器
+
+```bash
+$ docker run -d -P --name web --link db:db nginx
+```
+
++ `--link`参数的格式：`--link name:alias`，其中`name`为要连接容器的名称，`alias`为这个连接的别名；
++ 允许使用多个`--link`参数来连接多个容器；
+
+***

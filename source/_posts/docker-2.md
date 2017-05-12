@@ -184,6 +184,9 @@ docker ps --help
 ### 获取容器的进程
 + 格式：`docker top CONTAINER`
 
+### 获取容器的端口配置
++ 格式：`docker port CONTAINER[ PORT]`
+
 ### 获取对容器文件系统的更改
 + 格式：docker diff CONTAINER
 + 状态：
