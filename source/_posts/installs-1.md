@@ -92,7 +92,8 @@ zlib zlibmodule.c -I$(prefix)/include -L$(exec_prefix)/lib -lz
 ```bash
 # <prefix>用于指定安装目录
 $ ./configure \
---prefix=/usr/local/python3.5.2
+--prefix=/usr/local/python3.5.2 \
+--enable-optimizations
 ```
 
 + 编译并安装
@@ -149,9 +150,14 @@ $ vim /usr/bin/yum
 # 文件内容（首行）
 ## 修改之前为
 #!/usr/bin/python
+
 ## 修改之后为
 #!/usr/bin/python2.6
-## 若不知道系统自带python2的版本，可以使用以下命令查看
+```
+
++ 若不知道系统自带python2的版本，可以使用以下命令查看
+
+```bash
 $ ll /usr/bin/python*
 ```
 
