@@ -13,52 +13,63 @@ tags: [OpenStack]
 ### SQL服务
 #### Ubuntu系统
 + 安装SQL服务
-```bash
-$ apt-get install mariadb-server python-pymysql
-```
-+ 配置SQL服务
-```bash
-$ vim //etc/mysql/conf.d/openstack.cnf
 
-# 文件内容
+```bash
+$ apt install -y mariadb-server python-pymysql
+```
+
++ 配置SQL服务
+
+```bash
+$ vim /etc/mysql/conf.d/openstack.cnf
+```
+
+```text
 [mysqld]
 bind-address = <controller节点的IP地址>
-bind-address = 192.168.10.100
-default-storage-engine = MyISAM
-MyISAM_file_per_table
+default-storage-engine = innodb
+innodb_file_per_table
 max_connections = 4096
 collation-server = utf8_general_ci
 character-set-server = utf8
 ```
+
 + 重启SQL服务
+
 ```bash
 $ service mysql restart
 ```
 + 安全初始化SQL服务
+
 ```bash
 # 输入MySQL密码(已设置)，然后回答问题即可；
+# 推荐答案：n，y，n，y，y
 $ mysql_secure_installation
 ```
 #### CentOS系统
 + 安装SQL服务
+
 ```bash
-$ yum install mariadb mariadb-server python2-PyMySQL
+$ yum install -y mariadb mariadb-server python2-PyMySQL
 ```
 + 配置SQL服务
+
 ```bash
 $ vim //etc/mysql/conf.d/openstack.cnf
+```
 
-# 文件内容
+```text
 [mysqld]
 bind-address = <controller节点的IP地址>
-bind-address = 192.168.10.100
-default-storage-engine = MyISAM
-MyISAM_file_per_table
+default-storage-engine = innodb
+innodb_file_per_table
 max_connections = 4096
 collation-server = utf8_general_ci
 character-set-server = utf8
 ```
+
 + 启动SQL服务并设置开机自启
+
 ```bash
 # 设置随系统开机自启
 $ systemctl enable mariadb.service
@@ -66,74 +77,99 @@ $ systemctl enable mariadb.service
 $ systemctl start mariadb.service
 ```
 + 安全初始化SQL服务
+
 ```bash
 # 输入MySQL密码(已设置)，然后回答问题即可；
+# 推荐答案：n，y，n，y，y
 $ mysql_secure_installation
 ```
 
 ### 消息队列服务
 #### Ubuntu系统
 + 安装消息队列服务
+
 ```bash
-$ apt-get install rabbitmq-server
+$ apt install -y rabbitmq-server
 ```
 + 添加用户
+
 ```bash
 # <RABBIT_PASS>为自定义密码
 $ rabbitmqctl add_user openstack RABBIT_PASS
 ```
 + 设置权限
+
 ```bash
 $ rabbitmqctl set_permissions openstack ".*" ".*" ".*"
 ```
 #### CentOS系统
 + 安装消息队列服务
+
 ```bash
-$ yum install rabbitmq-server
+$ yum install -y rabbitmq-server
 ```
+
 + 启动消息队列服务并设置开机自启
+
 ```bash
 # 设置随系统开机自启
 $ systemctl enable rabbitmq-server.service
+
 # 启动消息队列服务
 $ systemctl start rabbitmq-server.service
 ```
 + 添加用户
+
 ```bash
 # <RABBIT_PASS>为自定义密码
 $ rabbitmqctl add_user openstack RABBIT_PASS
 ```
+
 + 设置权限
+
 ```bash
 $ rabbitmqctl set_permissions openstack ".*" ".*" ".*"
 ```
 
 ### 高速缓存服务
 #### Ubuntu系统
+
 + 安装高速缓存服务
+
 ```bash
-$ apt-get install memcached python-memcache
+$ apt install -y memcached python-memcache
 ```
+
 + 配置高速缓存服务
+
 ```bash
 $ vim /etc/memcached.conf
+```
 
-# 文件内容
+```text
 -l <Controller节点的IP地址>
 ```
+
 + 重启高速缓存服务
+
 ```bash
 $ service memcached restart
 ```
+
 #### CentOS系统
 + 安装高速缓存服务
+
 ```bash
-$ yum install memcached python-memcached
+$ yum install -y memcached python-memcached
 ```
+
 + 启动高速缓存服务并设置开机自启
+
 ```bash
 # 设置随系统开机自启
 $ systemctl enable memcached.service
 # 启动高速缓存服务
 $ systemctl start memcached.service
 ```
+
+***

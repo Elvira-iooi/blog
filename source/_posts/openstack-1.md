@@ -24,9 +24,12 @@ $ vim /etc/network/interfaces
 
 ```text
 # 回环网络接口
+# 随机自启
 auto lo
 iface lo inet loopback
+
 # 网络接口的名称
+# 随机自启
 auto eth0
 # 将dhcp修改为static
 iface eth0 inet static
@@ -81,8 +84,10 @@ DNS2=8.8.8.8
 ```bash
 # 禁用网络接口
 $ ifdown eth0
+
 # 启用网络接口
 $ ifup eth0
+
 # 查看网络接口的信息
 $ ifconfig eth0
 ```
@@ -111,8 +116,10 @@ vim /etc/hosts
 # 将每个节点均要写入该配置文件，格式：<IP地址 主机名> 
 192.168.10.100 controller
 192.168.10.200 compute
+
 # object节点(可选)
 192.168.10.110 object
+
 # block节点(可选)
 192.168.10.120 block
 ```
@@ -136,14 +143,14 @@ $ ping -c 4 block
 + 添加软件源
 
 ```bash
-$ apt-get install software-properties-common
+$ apt install -y software-properties-common
 $ add-apt-repository cloud-archive:mitaka
 ```
 
 + 更新软件包
 
 ```bash
-$ apt-get update && apt-get dist-upgrade
+$ apt update && apt dist-upgrade
 ```
 
 #### CentOS系统
@@ -151,7 +158,7 @@ $ apt-get update && apt-get dist-upgrade
 + 添加软件源
 
 ```bash
-$ yum install centos-release-openstack-mitaka
+$ yum install -y centos-release-openstack-mitaka
 ```
 
 + 更新软件包
@@ -167,20 +174,20 @@ $ yum upgrade
 + 安装客户端
 
 ```bash
-$ apt-get install python-openstackclient
+$ apt install -y python-openstackclient
 ```
 #### CentOS系统
 
 + 安装客户端
 
 ```bash
-$ yum install python-openstackclient
+$ yum install -y python-openstackclient
 ```
 
 + 若未关闭SELinux，则需安装OpenStack-SELinux
 
 ```bash
-$ yum install openstack-selinux
+$ yum install -y openstack-selinux
 ```
 
 ### 安装NTP服务
@@ -189,18 +196,20 @@ $ yum install openstack-selinux
 + 安装chrony软件
 
 ```bash
-$ apt-get install chrony
+$ apt install -y chrony
 ```
 
 + 更改配置文件
 
 ```bash
-$ vim /etc/chrony.conf
+$ vim /etc/chrony/chrony.conf
 ```
+
 ```
 # 请注释掉其他server
 # controller节点
 server cn.pool.ntp.org iburst 
+
 # 其他节点（同步controller节点）
 server controller iburst
 ```
@@ -216,7 +225,7 @@ $ service chrony restart
 + 安装chrony软件
 
 ```bash
-$ yum install chrony
+$ yum install -y chrony
 ```
 
 + 更改配置文件
@@ -228,7 +237,8 @@ $ vim /etc/chrony.conf
 ```text
 # 文件内容，请注释掉其他server
 ## controller节点
-server cn.pool.ntp.org iburst 
+server cn.pool.ntp.org iburst
+
 ## 其他节点（同步controller节点）
 server controller iburst
 ```
@@ -238,6 +248,7 @@ server controller iburst
 ```bash
 # 随系统开机自启
 $ systemctl enable chronyd.service
+
 # 启动NTP服务
 $ systemctl start chronyd.service
 ```

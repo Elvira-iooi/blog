@@ -267,6 +267,6 @@ $ docker rmi -f $(docker images | awk '{if(NR>1){print $3;}}')
 ```
 
 ## 快捷键
-+ `Ctrl + P +Q`：退出交互式但不结束容器；
++ `Ctrl + P, Ctrl + Q`：退出交互式但不结束容器；
 
 ***

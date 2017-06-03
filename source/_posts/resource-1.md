@@ -12,6 +12,7 @@ tags: [Resource]
 ## Ubuntu系统
 
 + 若要使用`https`协议的源，请安装以下软件
++ 使用`https`可以有效避免国内运营商的缓存劫持；
 
 ```bash
 $ apt-get install -y apt-transport-https
