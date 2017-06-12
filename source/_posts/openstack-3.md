@@ -32,7 +32,7 @@ $ mysql -u root -p
 ```
 + 退出数据库
 
-```bash
+```sql
 >>> exit
 ```
 
@@ -145,7 +145,7 @@ Listen 35357
 </VirtualHost>
 ```
 
-+ 启用虚拟机
++ 启用虚拟主机
 
 ```bash
 ln -s /etc/apache2/sites-available/wsgi-keystone.conf /etc/apache2/sites-enabled

@@ -1,5 +1,5 @@
 ---
-title: Python 3(二)之集成开发环境
+title: Python3（二）之IDE安装及配置
 date: 2017-05-13 10:12:55
 tags: [Python]
 ---
@@ -22,8 +22,10 @@ tags: [Python]
 ```python
 #!/usr/bin/env python3
 
-print("Hello, World!!!")
+print("Hello, World")
 ```
+
++ 执行脚本
 
 ```bash
 # 添加执行权限
@@ -35,6 +37,17 @@ $ dos2unix hello.py
 # 运行脚本
 $ ./hello.py
 ```
+
++ 若无`dos2unix`命令，请自行安装
+
+```bash
+# CentOS系统
+$ yum install -y dos2unix
+
+# Ubuntu系统
+$ apt install -y dos2unix
+```
+
 
 ## 简介
 

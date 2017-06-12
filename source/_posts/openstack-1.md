@@ -144,6 +144,7 @@ $ ping -c 4 block
 
 ```bash
 $ apt install -y software-properties-common
+
 $ add-apt-repository cloud-archive:mitaka
 ```
 

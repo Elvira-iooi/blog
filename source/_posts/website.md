@@ -27,12 +27,14 @@ tags: [Resource]
 + JQuery：[传送门](https://jquery.com/)；
 + PHP：[传送门](https://secure.php.net/)；
 + Python：[传送门](https://www.python.org/)；
++ Oracle：[传送门](https://www.oracle.com/)；
 
 ### 操作系统
 + Kernel(内核)：[传送门](https://www.kernel.org/)；
 + Ubuntu：[传送门](http://www.ubuntu.org.cn/index_kylin)；
 + CentOS：[传送门](https://www.centos.org/)；
 + RHEL：[传送门](https://www.redhat.com/)；
++ OpenSUSE：[传送门](https://www.opensuse.org/)；
 
 ### 数据库
 + MySQL：[传送门](https://www.mysql.com/)；
@@ -42,9 +44,15 @@ tags: [Resource]
 + Apache：[传送门](https://www.apache.org/)；
 + Nginx：[传送门](https://nginx.org/en/)；
 
+### Linux
++ 命令大全：[传送门](http://man.linuxde.net/)；
++ OpenSUSE中文：[传送门](https://forum.suse.org.cn/)；
+
 ### 其他
 + OpenStack：[传送门](https://www.openstack.org/)；
 + Docker：[传送门](https://www.docker.com/)；
++ Kubernetes：[](https://kubernetes.io/)；
++ GitHub：[传送门](https://github.com/)；
 
 ## 资源
 ### CSS
@@ -64,7 +72,6 @@ tags: [Resource]
 + TUNA：[传送门](https://mirror.tuna.tsinghua.edu.cn/);
 + MSDN：[传送门](http://msdn.itellyou.cn/)；
 
-
 ## 生活
 
 ### 电影
@@ -73,5 +80,11 @@ tags: [Resource]
 
 ### 短视频
 + 飞碟说：[传送门](http://www.feidieshuo.com/)；
+
+### 音乐
++ 无损音乐：[传送门](http://www.51ape.com/)；
+
+### 阅读
++ 简书：[传送门](http://www.jianshu.com/)；
 
 ***

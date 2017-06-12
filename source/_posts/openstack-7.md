@@ -65,6 +65,25 @@ OPENSTACK_API_VERSIONS = {
 
 # 配置默认的域（domain）
 OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "default"
+
+# 配置时区
+TIME_ZONE = "UTC"
+```
+
+#### Ubuntu系统
+
++ 重新加载`Apache`服务
+
+```bash
+$ service apache reload
+```
+
+#### CentOS系统
+
++ 重新启动`Apache`服务
+
+```bash
+$ systemctl restart httpd.service memcached.service
 ```
 
 ### 测试操作

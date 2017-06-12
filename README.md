@@ -24,10 +24,13 @@ menu:
 ```
 + 文件：`theme/next/layout/_layout.swig`
 + 内容：
+
 ```
 <script type="text/javascript" src="/js/src/particle.js"></script>
 <script type="text/javascript" src="/js/src/love.js"></script>
 ```
++ 位置：`backup/js/ --> themes/next/source/js/src`
+
 + 文件：`theme/next/layout/_partials/head/external-fonts.swig`
 + 内容：
 ```
@@ -88,6 +91,7 @@ menu:
     color: #37596c;
 }
 
+// 文章标题
 a {
     border-bottom: none;
 }
