@@ -1,11 +1,11 @@
 ---
-title: 搭建OpenStack(M版)之基础环境配置
+title: 搭建Mitaka版的OpenStack系列之基础环境配置
 date: 2017-02-23 10:08:03
 tags: [OpenStack]
 ---
 
 ## 简介
-+ 基于Ubuntu/CentOS系统，搭建OpenStack(M版)系列之基础环境配置；
++ 基于`Ubuntu/CentOS`系统，搭建`Mitaka`版的`OpenStack`系列之基础环境配置；
 
 <!-- more -->
 

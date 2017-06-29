@@ -1,11 +1,11 @@
 ---
-title: 搭建OpenStack(M版)之Horizon组件
+title: 搭建Mitaka版的OpenStack系列之Horizon组件
 date: 2017-03-06 21:41:41
 tags: [OpenStack]
 ---
 
 ## 简介
-+ 基于Ubuntu/CentOS系统，搭建OpenStack(M版)系列之Horizon组件；
++ 基于`Ubuntu/CentOS`系统，搭建`Mitaka`版的`OpenStack`系列之`Horizon`组件；
 
 <!-- more -->
 

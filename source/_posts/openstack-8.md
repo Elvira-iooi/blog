@@ -1,11 +1,11 @@
 ---
-title: 搭建OpenStack(M版)之启动实例
+title: 搭建Mitaka版的OpenStack系列之启动实例
 date: 2017-03-07 10:02:41
 tags: [OpenStack]
 ---
 
 ## 简介
-+ 基于Ubuntu/CentOS系统，搭建OpenStack(M版)系列之启动实例；
++ 基于`Ubuntu/CentOS`系统，搭建`Mitaka`版的`OpenStack`系列之启动实例；
 
 <!-- more -->
 
@@ -328,13 +328,13 @@ $ ping -c 4 172.18.1.1
 $ ping -c 4 baidu.com
 ```
 
-+ 在公有网络上创建1个浮动IP
++ 在公有网络上创建1个浮动`IP`
 
 ```bash
 $ openstack ip floating create provider
 ```
 
-+ 绑定浮动IP到实例上
++ 绑定浮动`IP`到实例上
 
 ```bash
 # 使用创建的IP代替<IP>
@@ -348,6 +348,47 @@ $ openstack ip floating add <IP> selfservice-instance
 $ ping -c 4 <IP>
 # 使用SSH连接，首次请输入yes
 $ ssh -i ~/.ssh/id_rsa cirros@<IP>
+```
+
+## 额外的服务
+
+### 块存储
+
++ 重新加载`admin`用户的管理凭据
+
+```bash
+$ source /openstack/admin-openrc
+```
+
++ 创建一个大小为`1GB`的卷
+
+```bash
+$ openstack volume create --size 1 VOLUME_NAME
+```
+
++ 经过一个短暂的时间，卷的状态由`creating`转换为`available`；
++ 列出所有的卷
+
+```bash
+$ openstack volume list
+```
+
++ 给一台实例连接一个卷
+
+```bash
+$ openstack server add volume INSTANCE_NAME VOLUME_NAME
+```
+
++ 再次列出所有的卷
+
+```bash
+$ openstack volume list
+```
+
++ 通过`VNC`连接到实例中，查看其磁盘信息
+
+```bash
+$ fdisk -l
 ```
 
 ***

@@ -6,11 +6,11 @@ tags: [Install]
 
 ## 简介
 + 子曰：`工欲善其事 必先利其器`，一款优秀的IDE(集成开发环境)不仅提供很多强大的工具(代码提示、代码纠错、括号匹配...)，而且可以提供一个舒适的编程环境；
-+ Sublime Text：一款收费闭源的跨平台、可扩展的文本编辑器；
++ `Sublime Text`：一款收费闭源的跨平台、可扩展的文本编辑器；
 
 ## 相关网址
-+ Sublime Text：[官网](https://www.sublimetext.com/)，[Download](https://www.sublimetext.com/3)；
-+ Hack：[官网](http://sourcefoundry.org/hack/)；
++ `Sublime Text`：[官网](https://www.sublimetext.com/)，[Download](https://www.sublimetext.com/3)；
++ `Hack`：[官网](http://sourcefoundry.org/hack/)；
 + 主题：[优秀主题](https://packagecontrol.io/browse/labels/theme)，[Boxy](https://packagecontrol.io/packages/Boxy%20Theme)；
 
 <!-- more -->
@@ -62,16 +62,16 @@ import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d
 ### 安装常用插件
 
 + 使用`Ctrl + Shift + P`，输入`install Package`，然后输入插件名即可；
-+ AdvancedNewFile：新建文件(Ctrl + Alt + N)；
-+ AutoFileName：文件名；
-+ AutoPep8：Python代码格式化(Ctrl + Shift + 8)；
-+ Boxy Theme：Boxy主题；
-+ Boxy Theme Addon - Font Face：Boxy主题用于设置字体；
-+ Emmet：前端神器；
-+ ConvertToUTF8：自动将文本转换为UTF-8格式；
-+ IMESupport：解决输入法不跟随问题；
-+ SublimeLinter：语法高亮；
-+ SideBarEnhancements：增强侧边栏功能；
++ `AdvancedNewFile`：新建文件(`Ctrl + Alt + N`)；
++ `AutoFileName`：文件名；
++ `AutoPep8`：`Python`代码格式化(`Ctrl + Shift + 8`)；
++ `Boxy Theme`：Boxy主题；
++ `Boxy Theme Addon - Font Face`：`Boxy`主题用于设置字体；
++ `Emmet`：前端神器；
++ `ConvertToUTF8`：自动将文本转换为`UTF-8`格式；
++ `IMESupport`：解决输入法不跟随问题；
++ `SublimeLinter`：语法高亮；
++ `SideBarEnhancements`：增强侧边栏功能；
 
 ### 主题设置
 + `Preferences >> Settings`

@@ -1,11 +1,11 @@
 ---
-title: 搭建OpenStack(M版)之Cinder组件
+title: 搭建Mitaka版的OpenStack系列之Cinder组件
 date: 2017-03-13 15:04:39
 tags: [OpenStack]
 ---
 
 ## 简介
-+ 基于Ubuntu/CentOS系统，搭建OpenStack(M版)系列之Cinder组件；
++ 基于`Ubuntu/CentOS`系统，搭建`Mitaka`版的`OpenStack`系列之`Cinder`组件；
 
 <!-- more -->
 
@@ -103,7 +103,7 @@ $ yum install -y openstack-cinder
 
 #### CentOS/Ubuntu系统
 
-+ 配置Cinder服务
++ 配置`Cinder`服务
 
 ```bash
 $ vim /etc/cinder/cinder.conf

@@ -385,7 +385,6 @@ print(a is not b)
 |in、not in|成员运算符|
 |not、or、and|逻辑运算符|
 
-
 ## 数据类型
 
 + 由于`Python`是动态类型的语言，所以变量的数据类型不需要事先声明；
@@ -808,5 +807,44 @@ print(var1 - var2)
 # 取对称差集（互相不包含的元素）
 print(var1 ^ var2)
 ```
+
+### bytes类型
+
++ `Python3`中对字符串与二进制数据做了更为清晰的区分，字符串使用`str`类型表示，使用`unicode`编码，而二进制数据则使用`bytes`类型表示；
++ 我们需要关心的是`str`类型与`bytes`类型之间的转换：
+
+{% asset_img str-bytes.png %}
+
+```python
+#!/usr/bin/env python3
+# _*_ coding:utf-8 _*_
+
+var_str = '您好'
+
+print(type(var_str))
+print(var_str)
+
+var_bytes = var_str.encode("utf-8")
+
+print(type(var_bytes))
+print(var_bytes)
+```
+
+### 总结
+
++ 在`Python`中，数据类型是属于对象的，变量是没有类型的；
+
+```python
+#!/usr/bin/env python3
+# _*_ coding:utf-8 _*_
+
+var = [1, 2, 3, 4]
+
+var = "Xiao"
+
+print(var)
+```
+
++ 以上代码中，`[1, 2, 3, 4]`为`list`类型，`"Xiao"`为`str`类型，而变量`var`没有类型，它仅仅是一个对象的引用，可以指向`list`对象，也可以指向`str`对象；
 
 ***

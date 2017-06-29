@@ -7,7 +7,7 @@ tags: [Python, Install]
 ## 实验环境
 + `CentOS/Ubuntu`系统；
 + 系统架构：`64位`；
-+ Python版本：`3.5.2`；
++ Python版本：`3.6.1`；
 
 ## 相关网址
 + Python: [官网](https://www.python.org/)，[Download](https://www.python.org/downloads/source/)；
@@ -50,7 +50,7 @@ $ yum -y groupinstall "Development Tools"
 + 安装readline库
 
 ```bash
-$ yum -y install readline readline-devel
+$ yum -y install readline readline-devel ncurses-devel
 ```
 + zlib库，PIP包管理器依赖
 
@@ -72,13 +72,13 @@ $ gcc --version
 + 解压源码包
 
 ```bash
-$ tar -zxvf Python-3.5.2.tgz
+$ tar -zxvf Python-3.6.1.tgz
 ```
 
 + 编辑配置文件
 
 ```bash
-$ cd Python-3.5.2/
+$ cd Python-3.6.1/
 $ vim Modules/Setup.dist
 ```
 
@@ -92,8 +92,8 @@ zlib zlibmodule.c -I$(prefix)/include -L$(exec_prefix)/lib -lz
 ```bash
 # <prefix>用于指定安装目录
 $ ./configure \
---prefix=/usr/local/python3.5.2 \
---enable-optimizations
+--enable-optimizations \
+--prefix=/usr/local/python3.6.1
 ```
 
 + 编译并安装
@@ -120,8 +120,8 @@ $ mv -f /usr/bin/python /usr/bin/python2
 $ rm -f /usr/bin/python
 
 # 创建新的软链接
-$ ln -sf /usr/local/python3.5.2/bin/python3.5 /usr/bin/python
-$ ln -sf /usr/local/python3.5.2/bin/python3.5 /usr/bin/python3
+$ ln -sf /usr/local/python3.6.1/bin/python3.6 /usr/bin/python
+$ ln -sf /usr/local/python3.6.1/bin/python3.6 /usr/bin/python3
 
 # 查看系统自带的pip软链接路径
 $ ll /usr/bin/pip*
@@ -134,8 +134,8 @@ $ mv -f /usr/bin/pip /usr/bin/pip2
 $ rm -f /usr/bin/pip
 
 # 创建PIP的软链接
-$ ln -sf /usr/local/python3.5.2/bin/pip3 /usr/bin/pip
-$ ln -sf /usr/local/python3.5.2/bin/pip3 /usr/bin/pip3
+$ ln -sf /usr/local/python3.6.1/bin/pip3 /usr/bin/pip
+$ ln -sf /usr/local/python3.6.1/bin/pip3 /usr/bin/pip3
 ```
 + 由于`CentOS`系统的包资源管理器为`yum`，其是由`Python`语言实现的，故依赖于系统的`Python2`，我们修改了系统内置的`Python`软链接，会导致`yum`无法使用，解决方法如下
 
@@ -173,13 +173,13 @@ $ wget https://bootstrap.pypa.io/get-pip.py
 + 安装PIP
 
 ```bash
-$ python get-pip.py
+$ python3 get-pip.py
 ```
 
 + 升级PIP
 
 ```bash
-$ python -m pip install -U pip
+$ python3 -m pip install -U pip
 ```
 
 ## 更改PIP的源
@@ -193,17 +193,20 @@ $ mkdir ~/.pip/
 $ vim ~/.pip/pip.conf
 ```
 
++ 清华大学的`PIP`源
+
 ```text
-# 文件内容，任选其一
-## 清华大学的源
 [global]
 index-url = https://pypi.tuna.tsinghua.edu.cn/simple
 [install]
 trusted-host=pypi.tuna.tsinghua.edu.cn
 disable-pip-version-check = true
 timeout = 6000
+```
 
-## 豆瓣的源
++ 豆瓣的`PIP`源
+
+```text
 [global]
 index-url = https://pypi.doubanio.com/simple/
 [install]

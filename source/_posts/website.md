@@ -10,13 +10,13 @@ tags: [Resource]
 <!-- more -->
 
 ## 优秀站点
-+ easyicon：[传送门](http://www.easyicon.net/)；
++ `easyicon`：[传送门](http://www.easyicon.net/)；
     + 描述：图标下载；
-+ nippon colors：[传送门](http://nipponcolors.com/)；
++ `nippon colors`：[传送门](http://nipponcolors.com/)；
     + 描述：有趣的配色网址；
-+ tinypng：[传送门](https://tinypng.com/)；
++ `tinypng`：[传送门](https://tinypng.com/)；
     + 描述：在线压缩图片；
-+ images：[传送门](https://unsplash.com/)；
++ `images`：[传送门](https://unsplash.com/)；
     + 描述：高清大图；
 + 在线工具：[传送门](http://tool.lu/)；
     + 方便快捷的工具集；
@@ -24,42 +24,42 @@ tags: [Resource]
 ## 官网
 
 ### 编程语言
-+ JQuery：[传送门](https://jquery.com/)；
-+ PHP：[传送门](https://secure.php.net/)；
-+ Python：[传送门](https://www.python.org/)；
-+ Oracle：[传送门](https://www.oracle.com/)；
++ `JQuery`：[传送门](https://jquery.com/)；
++ `PHP`：[传送门](https://secure.php.net/)；
++ `Python`：[传送门](https://www.python.org/)；
++ `Oracle`：[传送门](https://www.oracle.com/)；
 
 ### 操作系统
-+ Kernel(内核)：[传送门](https://www.kernel.org/)；
-+ Ubuntu：[传送门](http://www.ubuntu.org.cn/index_kylin)；
-+ CentOS：[传送门](https://www.centos.org/)；
-+ RHEL：[传送门](https://www.redhat.com/)；
-+ OpenSUSE：[传送门](https://www.opensuse.org/)；
++ `Kernel`(内核)：[传送门](https://www.kernel.org/)；
++ `Ubuntu`：[传送门](http://www.ubuntu.org.cn/index_kylin)；
++ `CentOS`：[传送门](https://www.centos.org/)；
++ `RHEL`：[传送门](https://www.redhat.com/)；
++ `OpenSUSE`：[传送门](https://www.opensuse.org/)；
 
 ### 数据库
-+ MySQL：[传送门](https://www.mysql.com/)；
-+ MariaDB：[传送门](https://mariadb.org/)；
++ `MySQL`：[传送门](https://www.mysql.com/)；
++ `MariaDB`：[传送门](https://mariadb.org/)；
 
 ### Web服务器
-+ Apache：[传送门](https://www.apache.org/)；
-+ Nginx：[传送门](https://nginx.org/en/)；
++ `Apache`：[传送门](https://www.apache.org/)；
++ `Nginx`：[传送门](https://nginx.org/en/)；
 
 ### Linux
 + 命令大全：[传送门](http://man.linuxde.net/)；
-+ OpenSUSE中文：[传送门](https://forum.suse.org.cn/)；
++ `OpenSUSE`中文：[传送门](https://forum.suse.org.cn/)；
 
 ### 其他
-+ OpenStack：[传送门](https://www.openstack.org/)；
-+ Docker：[传送门](https://www.docker.com/)；
-+ Kubernetes：[](https://kubernetes.io/)；
-+ GitHub：[传送门](https://github.com/)；
++ `OpenStack`：[传送门](https://www.openstack.org/)；
++ `Docker`：[传送门](https://www.docker.com/)；
++ `Kubernetes`：[](https://kubernetes.io/)；
++ `GitHub`：[传送门](https://github.com/)；
 
 ## 资源
 ### CSS
-+ ICO：[传送门](http://fontawesome.io/)；
++ `Font Awesome`(`ICO`)：[传送门](http://fontawesome.io/)；
 
 ### JQuery
-+ JQuery插件库：[传送门](http://www.jq22.com/)；
++ `JQuery`插件库：[传送门](http://www.jq22.com/)；
 
 ### 软件
 + N软网：[传送门](http://www.nruan.com/);
@@ -68,9 +68,12 @@ tags: [Resource]
 
 ### 镜像站
 + 阿里云：[传送门](http://mirrors.aliyun.com/)；
-+ USTC：[传送门](http://mirrors.ustc.edu.cn/)；
-+ TUNA：[传送门](https://mirror.tuna.tsinghua.edu.cn/);
-+ MSDN：[传送门](http://msdn.itellyou.cn/)；
++ `USTC`：[传送门](http://mirrors.ustc.edu.cn/)；
++ `TUNA`：[传送门](https://mirror.tuna.tsinghua.edu.cn/);
++ `MSDN`：[传送门](http://msdn.itellyou.cn/)；
+
+### 教程
++ 菜鸟教程：[传送门](http://www.runoob.com/)；
 
 ## 生活
 

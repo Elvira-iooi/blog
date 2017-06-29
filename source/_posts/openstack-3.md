@@ -1,11 +1,11 @@
 ---
-title: 搭建OpenStack(M版)之Keystone组件
+title: 搭建Mitaka版的OpenStack系列之Keystone组件
 date: 2017-02-23 21:42:04
 tags: [OpenStack]
 ---
 
 ## 简介
-+ 基于Ubuntu/CentOS系统，搭建OpenStack(M版)系列之Keystone组件；
++ 基于`Ubuntu/CentOS`系统，搭建`Mitaka`版的`OpenStack`系列之`Keystone`组件；
 
 <!-- more -->
 

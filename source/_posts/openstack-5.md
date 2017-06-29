@@ -1,11 +1,11 @@
 ---
-title: 搭建OpenStack(M版)之Nova组件
+title: 搭建Mitaka版的OpenStack系列之Nova组件
 date: 2017-03-04 15:52:28
 tags: [OpenStack]
 ---
 
 ## 简介
-+ 基于Ubuntu/CentOS系统，搭建OpenStack(M版)系列之Nova组件；
++ 基于`Ubuntu/CentOS`系统，搭建`Mitaka`版的`OpenStack`系列之`Nova`组件；
 
 <!-- more -->
 
