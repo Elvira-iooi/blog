@@ -1,5 +1,5 @@
 ---
-title: Python3黑魔法之迭代器与生成器
+title: Python黑魔法之迭代器与生成器
 date: 2017-06-10 00:40:13
 tags: [Python]
 ---
