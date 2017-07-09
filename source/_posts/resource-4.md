@@ -45,7 +45,8 @@ tags: [Resource]
 
 + `OpenStack`：[传送门](https://www.openstack.org/)；
 + `Docker`：[传送门](https://www.docker.com/)；
-+ `Kubernetes`：[](https://kubernetes.io/)；
++ `Kubernetes`：[传送门](https://kubernetes.io/)；
++ `Ceph`：[传送门](http://ceph.com/)；
 
 ## 资源
 

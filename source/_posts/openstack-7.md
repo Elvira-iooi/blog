@@ -53,7 +53,7 @@ CACHES = {
     }
 }
  
-# 启用域（domains）支持
+# 启用多域（domains）支持
 OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
 
 # 配置API版本
@@ -75,7 +75,7 @@ TIME_ZONE = "UTC"
 + 重新加载`Apache`服务
 
 ```bash
-$ service apache reload
+$ service apache2 reload
 ```
 
 #### CentOS系统

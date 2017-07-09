@@ -194,7 +194,7 @@ $ yum install -y openstack-selinux
 ### 安装NTP服务
 + 所有节点都要安装；
 #### Ubuntu系统
-+ 安装chrony软件
++ 安装`chrony`软件
 
 ```bash
 $ apt install -y chrony
@@ -215,7 +215,7 @@ server cn.pool.ntp.org iburst
 server controller iburst
 ```
 
-+ 重启NTP服务
++ 重启`NTP`服务
 
 ```bash
 $ service chrony restart
@@ -223,7 +223,7 @@ $ service chrony restart
 
 #### CentOS系统
 
-+ 安装chrony软件
++ 安装`chrony`软件
 
 ```bash
 $ yum install -y chrony
@@ -244,7 +244,7 @@ server cn.pool.ntp.org iburst
 server controller iburst
 ```
 
-+ 启动NTP服务并设置开机自启
++ 启动`NTP`服务并设置开机自启
 
 ```bash
 # 随系统开机自启

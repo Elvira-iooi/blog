@@ -5,18 +5,20 @@ tags: [Install]
 ---
 
 ## 实验环境
+
 + `CentOS/Ubuntu`系统；
 + 系统架构：`64位`；
 + MySQL版本：`5.7`；
 
 ## 相关网址
+
 + MySQL: [官网](https://www.mysql.com/)，[Download](https://dev.mysql.com/downloads/mysql/)；
 
 <!-- more -->
 
 ## 安装MySQL服务
 ### CentOS系统
-+ 下载系统对应版本的rpm-bundle包：
++ 下载系统对应版本的`rpm-bundle`包：
 
 ```bash
 # CentOS6
@@ -47,7 +49,7 @@ $ rpm -e --nodeps $(rpm -qa | grep mysql)
 $ rpm -e --nodeps $(rpm -qa | grep mariadb)
 ```
 
-+ 安装MySQL服务
++ 安装`MySQL`服务
 
 ```bash
 # CentOS6
@@ -173,7 +175,6 @@ $ vim /etc/mysql/my.cnf
 ```
 
 ```text
-# 文件内容
 [client]
 port = 3306
 socket = /mysql/tmp/mysql.sock
