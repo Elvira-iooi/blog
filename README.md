@@ -16,13 +16,13 @@ git clone https://github.com/iissnan/hexo-theme-next themes/next
 ```
 
 # 个性化
-+ 文件：`theme/next/languages/zh-Hans.yml`
++ 文件：`themes/next/languages/zh-Hans.yml`
 + 内容：
 ```
 menu:
   messages: 留言
 ```
-+ 文件：`theme/next/layout/_layout.swig`
++ 文件：`themes/next/layout/_layout.swig`
 + 内容：
 
 ```
@@ -31,7 +31,7 @@ menu:
 ```
 + 位置：`backup/js/ --> themes/next/source/js/src`
 
-+ 文件：`theme/next/layout/_partials/head/external-fonts.swig`
++ 文件：`themes/next/layout/_partials/head/external-fonts.swig`
 + 内容：
 ```
 {% if font_families !== '' %}
@@ -39,7 +39,7 @@ menu:
 {% endif %}
 ```
 
-+ 文件：`theme/next/source/css/_custom/custom.styl`
++ 文件：`themes/next/source/css/_custom/custom.styl`
 + 内容：
 ```
 // Custom styles.
@@ -121,8 +121,29 @@ a {
     cursor: pointer;
     transition: border-width 0.3s linear 0.1s, color 0.2s linear 0.3s;
 }
+
+// 圆形头像
+.site-author-image {
+    border-radius: 50%;
+    padding: 2px;
+    border: 2px solid #333; 
+}
+// 旋转并放大头像
+.site-author-image:hover {
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.5);
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,.5);
+    -o-box-shadow: 0 0 10px rgba(0,0,0,.5);
+    -ms-box-shadow: 0 0 10px rgba(0,0,0,.5);
+    box-shadow: 0 0 10px rgba(0,0,0,.5);
+
+    -webkit-transform: rotate(180deg) scale(1.1);
+    -moz-transform: rotate(180deg) scale(1.1);
+    -ms-transform: rotate(180deg) scale(1.1);
+    -o-transform: rotate(180deg) scale(1.1);
+    transform: rotate(180deg) scale(1.1)
+}
 ```
-+ 文件：`theme/next/source/css/_variables/base.styl`
++ 文件：`themes/next/source/css/_variables/base.styl`
 + 内容：
 ```
 // Global link color.
@@ -147,7 +168,7 @@ $code-border-radius             = 4px
 $code-background                = $my-code-background
 $code-foreground                = $my-code-foreground
 ```
-+ 文件：`theme/next/source/css/_schemes/Mist/_posts-expanded.styl`
++ 文件：`themes/next/source/css/_schemes/Mist/_posts-expanded.styl`
 + 内容:
 ```
 .post-body img {margin: 0 auto;}

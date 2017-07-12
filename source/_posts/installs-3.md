@@ -8,7 +8,7 @@ tags: [Install]
 
 + `CentOS/Ubuntu`系统；
 + 系统架构：`64位`；
-+ MySQL版本：`5.7`；
++ `MySQL`版本：`5.7.17`；
 
 ## 相关网址
 
@@ -64,6 +64,7 @@ $ rpm -ivh mysql-community-libs-5.7.17-1.el7.x86_64.rpm
 $ rpm -ivh mysql-community-client-5.7.17-1.el7.x86_64.rpm
 $ rpm -ivh mysql-community-server-5.7.17-1.el7.x86_64.rpm
 ```
+
 + 创建数据目录
 
 ```bash
@@ -73,7 +74,7 @@ $ chown -R mysql:mysql /data/mysql/*
 
 ### Ubuntu系统
 
-+ 下载系统对应版本的rpm-bundle包；
++ 下载系统对应版本的`deb-bundle`包；
 
 ```bash
 # Ubuntu14.04
@@ -84,7 +85,7 @@ $ tar -xvf mysql-server_5.7.17-1ubuntu16.04_amd64.deb-bundle.tar
 
 + 安装流程
     1. 安装依赖包；
-    2. 按照顺序安装MySQL服务；
+    2. 按照顺序安装`MySQL`服务；
     3. 迁移数据存储目录；
     4. 更改系统限制；
 
@@ -93,7 +94,8 @@ $ tar -xvf mysql-server_5.7.17-1ubuntu16.04_amd64.deb-bundle.tar
 ```bash
 $ apt-get install -y libaio1 libaio-dev libmecab2 libmecab-dev
 ```
-+ 安装MySQL服务
+
++ 安装`MySQL`服务
 
 ```bash
 # Ubuntu14.04，在安装时会弹窗提示设置密码
@@ -117,7 +119,8 @@ $ dpkg -i mysql-community-server_5.7.17-1ubuntu16.04_amd64.deb
 $ dpkg -i mysql-server_5.7.17-1ubuntu16.04_amd64.deb
 ```
 
-+ 停止MySQL服务
++ 停止`MySQL`服务
+
 ```bash
 # Ubuntu14.04
 $ service mysql stop
@@ -127,6 +130,7 @@ $ systemctl stop mysql.service
 ```
 
 + 迁移数据存储目录
+
 ```bash
 $ mkdir -p /data/mysql/data
 $ mkdir -p /data/mysql/tmp
@@ -137,6 +141,7 @@ $ rm -rf /var/lib/mysql
 ```
 
 + 更改系统限制
+
 ```bash
 $ vim /etc/apparmor.d/usr.sbin.mysqld
 ```
@@ -168,7 +173,7 @@ $ service apparmor reload
 
 ### CentOS/Ubuntu系统
 
-+ 配置MySQL服务
++ 配置`MySQL`服务
 
 ```bash
 $ vim /etc/mysql/my.cnf
@@ -177,16 +182,15 @@ $ vim /etc/mysql/my.cnf
 ```text
 [client]
 port = 3306
-socket = /mysql/tmp/mysql.sock
+socket = /data/mysql/tmp/mysql.sock
 default-character-set = utf8mb4
 
 [mysqld]
 port = 3306
-datadir = /mysql/data
-tmpdir = /mysql/tmp
-pid-file = /mysql/tmp/mysqld.pid
-socket = /mysql/tmp/mysql.sock
-log-error = /mysql/log/error.log
+datadir = /data/mysql/data
+pid-file = /data/mysql/tmp/mysqld.pid
+socket = /data/mysql/tmp/mysql.sock
+log-error = /data/mysql/log/error.log
 character_set_server = utf8mb4
 user = mysql
 bind-address = 0.0.0.0
@@ -200,7 +204,7 @@ explicit_defaults_for_timestamp = true
 
 ### CentOS系统
 
-+ 启动MySQL服务
++ 启动`MySQL`服务
 
 ```bash
 # CentOS6
@@ -218,7 +222,8 @@ $ netstat -nlput | grep "mysqld"
 
 ### Ubuntu系统
 
-+ 启动MySQL服务
++ 启动`MySQL`服务
+
 ```bash
 # Ubuntu14.04
 $ service mysql start
@@ -235,7 +240,7 @@ $ netstat -nlput | grep "mysql"
 
 ### CentOS/Ubuntu系统
 
-+ 获取MySQL的版本信息
++ 获取`MySQL`的版本信息
 
 ```bash
 $ mysql -V
@@ -250,11 +255,12 @@ $ ln -s /data/mysql/tmp/mysql.sock /tmp/mysql.sock
 ### CentOS系统
 
 + 查询自动生成的随机密码
+
 ```bash
 $ cat /data/mysql/log/error.log | grep "A temporary password" | awk '{print $NF}'
 ```
 
-+ 登录MySQL
++ 登录到`MySQL`数据库
 
 ```bash
 # 格式
@@ -269,6 +275,7 @@ $ mysql -u root -p'=&aw>ej_?1TU'
 # 密码必须满足一定的复杂度, 包含大小写字母, 数字, 长度满足8位
 SET PASSWORD='NEW_PASSWORD';
 ```
+
 + 退出登录
 
 ```bash
@@ -309,7 +316,8 @@ systemctl status mysqld.service
 
 ### Ubuntu系统
 
-+ 登录MySQL
++ 登录到`MySQL`数据库
+
 ```bash
 $ mysql -u root -p'密码'
 ```
@@ -320,6 +328,7 @@ $ mysql -u root -p'密码'
 # 密码必须满足一定的复杂度, 包含大小写字母, 数字, 长度满足8位
 SET PASSWORD='NEW_PASSWORD';
 ```
+
 + 退出登录
 
 ```bash
@@ -345,3 +354,5 @@ $ systemctl enable mysql.service
 ## 禁用开机自启MySQL服务:
 $ systemctl disable mysql.service
 ```
+
+***
