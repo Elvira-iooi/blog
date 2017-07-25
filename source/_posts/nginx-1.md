@@ -7,6 +7,7 @@ tags: [Nginx, Install]
 ## 实验环境
 + 操作系统：内核为`Linux 2.6`及以上的`CentOS/Ubuntu`系统；
 + 系统架构：`64位`；
++ 推荐使用`CentOS-7`系统；
 
 ## 相关网址
 + `Nginx`：[官网](http://nginx.org/)、[Download页面](http://nginx.org/en/download.html)；
@@ -17,140 +18,218 @@ tags: [Nginx, Install]
 <!-- more -->
 
 ## 安装指导
-+ 查看内核版本
 
-```bash
-$ uname -a
-```
+### 概要
+
 + 安装`Nginx`前，有一些库需要下载，分别是`PCRE`、`zlib`以及`OpenSSL`，另外值得注意的是这3个库仅需下载并解压缩即可，无需编译安装；
 + 将软件包下载完后，使用远程FTP工具`Xftp 5`将软件包上传至服务器；
-### Ubuntu系统
-+ 安装编译套件
+
+### 查看内核版本
 
 ```bash
-$ apt-get -y install build-essential
+shell> uname -a
 ```
-### CentOS系统
-+ 安装编译套件
+
+### 安装编译依赖环境
+
+#### Ubuntu系统
 
 ```bash
-$ yum -y groupinstall "Development Tools"
+shell> apt install -y build-essential
 ```
-### CentOS/Ubuntu系统
+
+#### CentOS系统
+
+```bash
+shell> yum install -y gcc gcc-c++ make automake autoconf bzip2
+```
+
+### 解压软件包
+
 + 解压`PCRE`库
 
 ```bash
-$ tar -zxvf pcre-8.40.tar.gz
+shell> tar -zxvf pcre-8.41.tar.gz
 ```
+
 + 解压`zlib`库
 
 ```bash
-$ tar -zxvf zlib-1.2.11.tar.gz
+shell> tar -zxvf zlib-1.2.11.tar.gz
 ```
+
 + 解压`openssl`库
 
 ```bash
-$ tar -zxvf openssl-1.0.2k.tar.gz
+shell> tar -zxvf openssl-1.0.2l.tar.gz
 ```
+
 + 解压`nginx`
 
 ```bash
-$ tar -zxvf nginx-1.10.3.tar.gz
+shell> tar -zxvf nginx-1.12.1.tar.gz
 ```
-+ 添加`nginx`用户及用户组
+
+### 添加`nginx`用户及用户组
 
 ```bash
-$ groupadd -r nginx && useradd -r -g nginx -s /sbin/nologin nginx
+shell> groupadd -r nginx && useradd -r -g nginx -s /sbin/nologin nginx
 ```
+
+### 预编译
+
 + 切换目录
 
 ```bash
-$ cd nginx-1.10.3
+shell> cd nginx-1.12.1
 ```
-+ 预编译
 
 ```bash
-$ ./configure --prefix=/usr/local/nginx \
-    --pid-path=/var/run/nginx.pid \
-    --lock-path=/var/lock/nginx.lock \
-    --user=nginx \
-    --group=nginx \
-    --with-openssl=../openssl-1.0.2k \
-    --with-pcre=../pcre-8.40 \
-    --with-zlib=../zlib-1.2.11 \
-    --with-http_ssl_module \
-    --with-http_dav_module \
-    --with-http_flv_module \
-    --with-http_realip_module \
-    --with-http_gzip_static_module \
-    --with-http_stub_status_module \
-    --with-mail \
-    --with-mail_ssl_module \
-    --http-client-body-temp-path=/var/tmp/nginx/client \
-    --http-proxy-temp-path=/var/tmp/nginx/proxy \
-    --http-fastcgi-temp-path=/var/tmp/nginx/fastcgi \
-    --http-uwsgi-temp-path=/var/tmp/nginx/uwsgi \
-    --http-scgi-temp-path=/var/tmp/nginx/scgi \
-    --with-debug
+./configure --prefix=/usr/local/nginx \
+  --pid-path=/var/run/nginx.pid \
+  --lock-path=/var/lock/nginx.lock \
+  --user=nginx \
+  --group=nginx \
+  --with-openssl=../openssl-1.0.2l \
+  --with-pcre=../pcre-8.41 \
+  --with-zlib=../zlib-1.2.11 \
+  --with-http_ssl_module \
+  --with-http_dav_module \
+  --with-http_flv_module \
+  --with-http_realip_module \
+  --with-http_gzip_static_module \
+  --with-http_stub_status_module \
+  --with-mail \
+  --with-mail_ssl_module \
+  --with-debug
 ```
-+ 编译并安装
+
+### 编译并安装
+
+#### 单个CPU
 
 ```bash
-# 单个CPU
-$ make && make install
-
-# 多个CPU(多进程编译，加速编译)
-$ make -j 4 && make install
+shell> make && make install
 ```
-+ 创建相关目录
+
+#### 多个CPU(多进程编译，加速编译)
 
 ```bash
-$ mkdir -p /var/tmp/nginx/{client,proxy,fastcgi,uwsgi,scgi}
+shell> make -j 4 && make install
 ```
-+ 创建软链接
+
+### 安装完成
+
+#### 创建软链接
 
 ```bash
-$ ln -s /usr/local/nginx/sbin/nginx /usr/sbin
+shell> ln -s /usr/local/nginx/sbin/nginx /usr/sbin
 ```
 
-## 提供`Sysv init`脚本
-+ 创建脚本
+#### 原始命令
+
+##### 启动`nginx`服务
 
 ```bash
-# 不适用于Ubuntu16.04
-$ touch /etc/init.d/nginx
+shell> nginx [-c PATH]
 ```
-+ 文件内容
+
+##### 检查配置文件是否正确
+
+```bash
+shell> nginx -t [-c PATH]
+```
+
+##### 重新加载配置文件
+
+```bash
+shell> nginx -s reload
+```
+
+##### 日志文件回滚
+
++ 重新打开日志文件，切割日志，防止日志文件过大
+
+```bash
+shell> nginx -s reopen
+```
+
+##### 优雅地停止Nginx
+
+```bash
+shell> nginx -s quit
+```
+
+##### 快速地停止Nginx(不推荐)
+
+```bash
+shell> nginx -s stop
+```
+
+##### 获取版本信息
+
+```bash
+shell> nginx -v
+```
+
+##### 获取编译时的参数
+
+```bash
+shell> nginx -V
+```
+
+#### 配置`Nginx`服务开机自启
+
+```bash
+shell> vim /etc/rc.local
+```
+
+```text
+/usr/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+```
+
+## 服务启动脚本
+
+### 提供`Sysv init`脚本
+
+#### CentOS系统
+
+##### 创建文件
+
+```bash
+shell> touch /etc/init.d/nginx
+```
+
+##### 文件内容
 
 ```text
 #!/bin/sh
 #
 # nginx - this script starts and stops the nginx daemon
 #
-# chkconfig:   - 85 15 
+# chkconfig:   - 85 15
 # description:  Nginx is an HTTP(S) server, HTTP(S) reverse \
 #               proxy and IMAP/POP3 proxy server
 # processname: nginx
 # config:      /usr/local/nginx/conf/nginx.conf
 # pidfile:     /var/run/nginx.pid
- 
+
 # Source function library.
 . /etc/rc.d/init.d/functions
- 
+
 # Source networking configuration.
 . /etc/sysconfig/network
- 
+
 # Check that networking is up.
 [ "$NETWORKING" = "no" ] && exit 0
- 
+
 nginx="/usr/sbin/nginx"
 prog=$(basename $nginx)
- 
+
 NGINX_CONF_FILE="/usr/local/nginx/conf/nginx.conf"
- 
+
 lockfile=/var/lock/subsys/nginx
- 
- 
+
 start() {
     [ -x $nginx ] || exit 5
     [ -f $NGINX_CONF_FILE ] || exit 6
@@ -161,7 +240,7 @@ start() {
     [ $retval -eq 0 ] && touch $lockfile
     return $retval
 }
- 
+
 stop() {
     echo -n $"Stopping $prog: "
     killproc $prog -QUIT
@@ -170,14 +249,14 @@ stop() {
     [ $retval -eq 0 ] && rm -f $lockfile
     return $retval
 }
- 
+
 restart() {
     configtest || return $?
     stop
     sleep 1
     start
 }
- 
+
 reload() {
     configtest || return $?
     echo -n $"Reloading $prog: "
@@ -185,23 +264,23 @@ reload() {
     RETVAL=$?
     echo
 }
- 
+
 force_reload() {
     restart
 }
- 
+
 configtest() {
   $nginx -t -c $NGINX_CONF_FILE
 }
- 
+
 rh_status() {
     status $prog
 }
- 
+
 rh_status_q() {
     rh_status >/dev/null 2>&1
 }
- 
+
 case "$1" in
     start)
         rh_status_q && exit 0
@@ -224,7 +303,7 @@ case "$1" in
     status)
         rh_status
         ;;
-    condrestart|try-restart)
+    condrestart | try-restart)
         rh_status_q || exit 0
             ;;
     *)
@@ -232,53 +311,261 @@ case "$1" in
         exit 2
 esac
 ```
-+ 为脚本赋予权限
+
+##### 为脚本赋予执行权限
 
 ```bash
-$ chmod 755 /etc/init.d/nginx
+shell> chmod 755 /etc/init.d/nginx
 ```
-### CentOS/Ubuntu系统
-+ 配置Nginx服务开机自启
+
+##### 启动服务并开机自启
+
+###### 启动服务
 
 ```bash
-$ vim /etc/rc.local
+shell> service nginx start
 ```
+
+###### 启用开机自启
+
+```bash
+shell> chkconfig --add nginx
+shell> chkconfig --level 35 nginx on
+```
+
+#### Ubuntu系统
+
+##### 创建文件
+
+```bash
+shell> touch /etc/init.d/nginx
+```
+
+##### 文件内容
 
 ```text
-# 文件内容，添加运行命令
-/usr/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:   nginx
+# Required-Start:    $local_fs $remote_fs $network $syslog $named
+# Required-Stop:     $local_fs $remote_fs $network $syslog $named
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts the nginx web server
+# Description:       starts nginx using start-stop-daemon
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/nginx
+NAME=nginx
+DESC=nginx
+NGINX_CONF_FILE="/usr/local/nginx/conf/nginx.conf"
+
+test -x ${DAEMON} || exit 0
+
+# Source function library.
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+PID=$(cat ${NGINX_CONF_FILE} | grep -Ev '^\s*#' | awk 'BEGIN { RS="[;{}]" } { if ($1 == "pid") print $2 }' | head -n1)
+
+if [ -z "${PID}" ]
+then
+    PID=/var/run/nginx.pid
+fi
+
+
+do_start()
+{
+    start-stop-daemon --start --quiet --pidfile $PID --exec $DAEMON --test > /dev/null \
+        || return 1
+    start-stop-daemon --start --quiet --pidfile $PID --exec $DAEMON -- \
+        $DAEMON_OPTS 2>/dev/null \
+        || return 2
+}
+
+test_nginx_config() {
+    $DAEMON -t $DAEMON_OPTS >/dev/null 2>&1
+}
+
+do_stop()
+{
+    start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PID --name $NAME
+    RETVAL="$?"
+    sleep 1
+    return "$RETVAL"
+}
+
+do_reload() {
+    start-stop-daemon --stop --signal HUP --quiet --pidfile $PID --name $NAME
+    return 0
+}
+
+# Rotate log files
+do_rotate() {
+    start-stop-daemon --stop --signal USR1 --quiet --pidfile $PID --name $NAME
+    return 0
+}
+
+case "$1" in
+    start)
+        [ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
+        do_start
+        case "$?" in
+            0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+            2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+        esac
+        ;;
+    stop)
+        [ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC" "$NAME"
+        do_stop
+        case "$?" in
+            0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+            2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+        esac
+        ;;
+    restart)
+        log_daemon_msg "Restarting $DESC" "$NAME"
+
+        # Check configuration before stopping nginx
+        if ! test_nginx_config; then
+            log_end_msg 1 # Configuration error
+            exit 0
+        fi
+
+        do_stop
+        case "$?" in
+            0|1)
+                do_start
+                case "$?" in
+                    0) log_end_msg 0 ;;
+                    1) log_end_msg 1 ;; # Old process is still running
+                    *) log_end_msg 1 ;; # Failed to start
+                esac
+                ;;
+            *)
+                # Failed to stop
+                log_end_msg 1
+                ;;
+        esac
+        ;;
+    reload|force-reload)
+        log_daemon_msg "Reloading $DESC configuration" "$NAME"
+
+        # Check configuration before reload nginx
+        #
+        # This is not entirely correct since the on-disk nginx binary
+        # may differ from the in-memory one, but that's not common.
+        # We prefer to check the configuration and return an error
+        # to the administrator.
+        if ! test_nginx_config; then
+            log_end_msg 1 # Configuration error
+            exit 0
+        fi
+
+        do_reload
+        log_end_msg $?
+        ;;
+    configtest|testconfig)
+        log_daemon_msg "Testing $DESC configuration"
+        test_nginx_config
+        log_end_msg $?
+        ;;
+    status)
+        status_of_proc -p $PID "$DAEMON" "$NAME" && exit 0 || exit $?
+        ;;
+    rotate)
+        log_daemon_msg "Re-opening $DESC log files" "$NAME"
+        do_rotate
+        log_end_msg $?
+        ;;
+    *)
+        echo "Usage: $NAME {start|stop|restart|reload|force-reload|status|configtest|rotate}" >&2
+        exit 3
+        ;;
+esac
 ```
-### CentOS系统
-+ 使用`chkconfig`命令管理
+
+##### 为脚本赋予执行权限
 
 ```bash
-# 添加到服务列表
-$ chkconfig --add nginx
-
-# 设置开机自启动
-$ chkconfig nginx on
+shell> chmod 755 /etc/init.d/nginx
 ```
 
-## 测试步骤
-+ 启动`nginx`服务
+##### 启动服务并开机自启
+
+###### 启动服务
 
 ```bash
-$ service nginx start
+shell> service nginx start
 ```
-+ 查看`nginx`进程
+
+###### 启用开机自启
 
 ```bash
-$ ps aux | grep "nginx"
+shell> update-rc.d nginx defaults
 ```
-+ 查看端口号
+
+### 提供`Systemd`配置文件
+
+#### 创建文件
 
 ```bash
-$ netstat -nlput | grep "nginx"
+shell> touch /lib/systemd/system/nginx.service
 ```
-+ 使用浏览器访问即可(http://<IP地址>:<端口号>)；
 
-## 编译参数释义
-+ `--prefix`：`nginx`安装目录；
+#### 文件内容
+
+```text
+[Unit]
+Description=The NGINX HTTP and reverse proxy server
+After=syslog.target network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/nginx.pid
+ExecStartPre=/usr/sbin/nginx -t
+ExecStart=/usr/sbin/nginx
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+```
+
+#### 启动服务并开机自启
+
+##### 启动服务
+
+```bash
+shell> systemctl start nginx.service
+```
+
+##### 启用开机自启
+
+```bash
+shell> systemctl enable nginx.service
+```
+
+## 温馨补充
+
+### 获取`nginx`的进程
+
+```bash
+shell> ps aux | grep "nginx"
+```
+
+### 获取`nginx`的端口号
+
+```bash
+shell> netstat -nlput | grep "nginx"
+```
+
+### 预编译参数释义
+
++ `--prefix`：`nginx`的安装目录；
 + `--pid-path`：`pid`文件位置，默认在`logs`目录；
 + `--lock-path`：`lock`文件位置，默认在`logs`目录；
 + `--user`：指定`Nginx worker`进程运行时所属的用户，切勿设置为`root`；
@@ -295,74 +582,37 @@ $ netstat -nlput | grep "nginx"
 + `--with-pcre`：`PCRE`的源码包路径；
 + `--with-zlib`：`zlib`的源码包路径；
 + `--with-debug`：允许调试日志；
-+ `--http-client-body-temp-path`： 客户端请求临时文件路径；
-+ `--http-proxy-temp-path`：设置`http proxy`临时文件路径；
-+ `--http-fastcgi-temp-path`：设置`http fastcgi`临时文件路径；
-+ `--http-uwsgi-temp-path`：设置`uwsgi`临时文件路径；
-+ `--http-scgi-temp-path`：设置`scgi`临时文件路径；
 
-## 原始命令
-+ 启动`nginx`服务
+## 进阶操作
 
-```bash
-$ nginx [-c PATH]
-```
-+ 检查配置文件是否正确
+### 日志切割
 
-```bash
-$ nginx -t [-c PATH]
-```
-+ 重新加载配置文件
-
-```bash
-$ nginx -s reload
-```
-+ 日志文件回滚
-
-```bash
-# 重新打开日志文件，切割日志，防止日志文件过大
-$ nginx -s reopen
-```
-+ 优雅地停止Nginx
-
-```bash
-$ nginx -s quit
-```
-+ 快速地停止Nginx(不推荐)
-
-```bash
-$ nginx -s stop
-```
-+ 获取版本信息
-
-```bash
-$ nginx -v
-```
-+ 获取编译时的参数
-
-```bash
-$ nginx -V
-```
-
-## 日志切割
 + 服务日志的重要性在这里就不再赘述了，日志会随着服务运行时间的增加而增加，当日志过大时，则不利于我们查找内容；
 + 使用`mv`命令将旧的日志文件重命名或移动到新位置，但是`Nginx`默认还是将日志写入该文件；
 + 使用`nginx -s reopen`命令重新打开日志文件，则将新的日志信息写入到新文件，实现了日志的切割；
 
-## 平滑升级Nginx
+### 平滑升级Nginx
+
 + `Nginx`支持不重启服务来完成新版本的平滑升级；
 + 通知正在运行的旧版本`Nginx`准备升级，通过向`master`进程发送`SIGUSR2`信号可达到目的，此时旧版本的`PID`文件会由`nginx.pid`重命名为`nginx.pid.oldbin`；
-+ 发送`SIGUSR2`信号
+
+#### 发送`SIGUSR2`信号
+
++ 使用`PID`文件的路径代替`Nginx_Master_PID`
 
 ```bash
-# 使用PID文件的路径代替<Nginx Master PID>
-$ kill -s SIGUSR2 <Nginx Master PID>
+shell> kill -s SIGUSR2 Nginx_Master_PID
 ```
+
 + 启动新版本的`Nginx`，这时新旧版本的`Nginx`在同时运行；
 + 向旧版本的`master`进程发送`SIGQUIT`信号，以优雅的方式关闭旧版本的`Nginx`；
-+ 发送`SIGQUIT`信号
+
+#### 发送`SIGQUIT`信号
+
++ 使用`PID`文件的路径代替`Nginx_Master_PID`
 
 ```bash
-# 使用PID文件的路径代替<Nginx Master PID>
-$ kill -s SIGQUIT <Nginx Master PID>
+shell> kill -s SIGQUIT Nginx_Master_PID
 ```
+
+***

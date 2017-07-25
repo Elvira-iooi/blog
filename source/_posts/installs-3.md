@@ -12,7 +12,7 @@ tags: [Install]
 
 ## 相关网址
 
-+ MySQL: [官网](https://www.mysql.com/)，[Download](https://dev.mysql.com/downloads/mysql/)；
++ `MySQL`: [官网](https://www.mysql.com/)，[Download](https://dev.mysql.com/downloads/mysql/)；
 
 <!-- more -->
 
