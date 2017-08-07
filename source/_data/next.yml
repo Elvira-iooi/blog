@@ -40,7 +40,7 @@ menu:
   home: /
   tags: /tags
   archives: /archives
-  messages: /messages
+  # messages: /messages
   about: /about
   # categories: /categories
   # search: /search
@@ -64,7 +64,7 @@ menu_icons:
   archives: archive
   sitemap: sitemap
   commonweal: heartbeat
-  messages: pencil-square
+  # messages: pencil-square
 
 
 

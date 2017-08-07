@@ -1,47 +1,88 @@
 # Blog
-+ 描述：Backup for Xiao's Blog
 
-# 流程
+## 描述
+
+1. Backup for Xiao's Blog.
+
+## 流程
+
 + 拉取博客
+
 ```
 git clone git@github.com:YuXiaoCoder/blog.git
 ```
+
 + 切换目录
+
 ```
 cd blog/
 ```
+
 + 拉取主题
+
 ```
 git clone https://github.com/iissnan/hexo-theme-next themes/next
 ```
 
-# 个性化
+## 个性化
+
 + 文件：`themes/next/languages/zh-Hans.yml`
+
+```bash
+vim themes/next/languages/zh-Hans.yml
+```
+
 + 内容：
+
 ```
 menu:
   messages: 留言
 ```
+
 + 文件：`themes/next/layout/_layout.swig`
+
+```bash
+vim themes/next/layout/_layout.swig
+```
+
 + 内容：
 
 ```
-<script type="text/javascript" src="/js/src/particle.js"></script>
-<script type="text/javascript" src="/js/src/love.js"></script>
+<body>
+    <script type="text/javascript" src="/js/src/particle.js"></script>
+    <script type="text/javascript" src="/js/src/love.js"></script>
+</body>
 ```
+
 + 位置：`backup/js/ --> themes/next/source/js/src`
 
-+ 文件：`themes/next/layout/_partials/head/external-fonts.swig`
-+ 内容：
+```bash
+cp backup/js/* themes/next/source/js/src/
 ```
+
++ 文件：`themes/next/layout/_partials/head/external-fonts.swig`
+
+```bash
+vim themes/next/layout/_partials/head/external-fonts.swig
+```
+
++ 内容：
+
+```text
 {% if font_families !== '' %}
   {% set font_host = font_config.host | default('//fonts.lug.ustc.edu.cn') %}
 {% endif %}
 ```
 
 + 文件：`themes/next/source/css/_custom/custom.styl`
-+ 内容：
+
+```bash
+vim themes/next/source/css/_custom/custom.styl
 ```
+
++ 内容：
+
+```text
 // Custom styles.
 //首页文章阴影样式
 .post {
@@ -143,9 +184,22 @@ a {
     transform: rotate(180deg) scale(1.1)
 }
 ```
+
 + 文件：`themes/next/source/css/_variables/base.styl`
-+ 内容：
+
+```bash
+vim themes/next/source/css/_variables/base.styl
 ```
+
++ 内容：
+
+```text
+// Colors
+$my-link-blue = #6495ED  //链接颜色
+$my-link-hover-blue = #0477AB  //鼠标悬停后颜色
+$my-code-foreground = #DD0055  // 用``围出的代码块字体颜色
+$my-code-background = #EEE  // 用``围出的代码块背景颜色
+
 // Global link color.
 //$link-color                   = $black-light
 //$link-hover-color             = $black-deep
@@ -168,8 +222,40 @@ $code-border-radius             = 4px
 $code-background                = $my-code-background
 $code-foreground                = $my-code-foreground
 ```
+
 + 文件：`themes/next/source/css/_schemes/Mist/_posts-expanded.styl`
-+ 内容:
+
+```bash
+vim themes/next/source/css/_schemes/Mist/_posts-expanded.styl
 ```
+
++ 内容:
+
+```text
 .post-body img {margin: 0 auto;}
 ```
+
+## 主机间免密通信
+
+```bash
+chmod 600 ~/.ssh/github
+chmod 600 ~/.ssh/xiaocoder
+```
+
+```bash
+vim ~/.ssh/config
+```
+
+```text
+Host github.com
+HostName github.com
+User YuXiao
+IdentityFile ~/.ssh/github
+
+Host 119.29.80.189
+HostName 119.29.80.189
+User root
+IdentityFile ~/.ssh/xiaocoder
+```
+
+
