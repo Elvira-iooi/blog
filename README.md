@@ -235,6 +235,22 @@ vim themes/next/source/css/_schemes/Mist/_posts-expanded.styl
 .post-body img {margin: 0 auto;}
 ```
 
++ 文件：`themes/next/layout/_partials/footer.swig`
+
+```bash
+vim themes/next/layout/_partials/footer.swig
+```
+
++ 内容：
+
+```text
+<div class="copyright" >
+  <span class="author" itemprop="copyrightHolder">{{ config.author }}</span>
+  &nbsp;&nbsp;
+  <a href="http://www.miitbeian.gov.cn/">蜀ICP备17004598号-1</a>
+</div>
+```
+
 ## 主机间免密通信
 
 ```bash
@@ -258,4 +274,4 @@ User root
 IdentityFile ~/.ssh/xiaocoder
 ```
 
-
+***
