@@ -119,7 +119,10 @@ auth_strategy = keystone
 # Nerutron（网络）
 use_neutron = True
 firewall_driver = nova.virt.firewall.NoopFirewallDriver
- 
+
+# 启用云主机开机自启
+# resume_guests_state_on_host_boot = true
+
 [api_database]
 # <NOVA_DBPASS>为Nova-api数据库的密码
 connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova_api

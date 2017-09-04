@@ -203,14 +203,14 @@ $ source /openstack/admin-openrc
 $ cd /openstack
 
 # 使用wget下载镜像
-$ wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
+$ wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.5-x86_64-disk.img
 ```
 
 + 上传测试镜像
 
 ```bash
 $ openstack image create "cirros" \
-    --file cirros-0.3.4-x86_64-disk.img \
+    --file cirros-0.3.5-x86_64-disk.img \
     --disk-format qcow2 --container-format bare \
     --public
 ```

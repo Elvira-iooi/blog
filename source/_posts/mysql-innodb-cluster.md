@@ -19,11 +19,11 @@ tags: [MySQL]
 + `MySQL Router`的版本：`2.1.4`。
 + 节点数量：`3`个。
 
+<!-- more -->
+
 ### 相关网址
 
 + MySQL：[官网](https://www.mysql.com/)，[Download](https://dev.mysql.com/downloads/mysql/)。
-
-<!-- more -->
 
 ### 架构图
 

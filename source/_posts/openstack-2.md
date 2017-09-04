@@ -55,7 +55,7 @@ $ yum install -y mariadb mariadb-server python2-PyMySQL
 + 配置SQL服务
 
 ```bash
-$ vim //etc/mysql/conf.d/openstack.cnf
+$ vim /etc/my.cnf.d/openstack.cnf
 ```
 
 ```text
