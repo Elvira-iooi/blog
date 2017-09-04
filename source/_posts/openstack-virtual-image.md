@@ -334,7 +334,9 @@ $ virsh vncdisplay xenial
 + 推荐使用的`VNC`：[Tightvnc](http://tightvnc.com/)，[UltraVNC](http://www.uvnc.com/)；
 + 在客户端使用`VNC`连接并安装操作系统即可：
     1. 选择本地时区：`Asia/Chongqing`或`Asia/Shanghai`；
-    2. 磁盘分区：`/boot`、`swap`、`/`分区；
+    2. 磁盘分区：
+        + 常规分区方式：`/boot`、`swap`、`/`分区；
+        + 可选分区方式：仅`/`分区；
     3. 安装软件：`OpenSSH Server`；
     4. 安装引导：`GRUB boot loader`;
     5. 分离`CD`并重启系统（此处可能需要手动启动虚拟机）；
