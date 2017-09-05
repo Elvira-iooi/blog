@@ -20,9 +20,22 @@ tags: [Ceph]
 |节点|服务|IP|
 |:----:|:----:|:----:|
 |node1|Deploy|172.18.50.90|
-|node2|Monitor|172.18.50.91|
-|node3|OSD|172.18.50.92|
-|node4|OSD|172.18.50.93|
+|node2|Monitor & OSD|172.18.50.91|
+|node3|Monitor & OSD|172.18.50.92|
+|node4|Monitor & OSD|172.18.50.93|
+
+### 节点磁盘信息
+
++ `/dev/xvda`：系统盘，`/boot`，`swap`，`/`；
++ `/dev/xvdb`、`/dev/xvdc`：`SATA`盘，用于作为`Ceph`的`OSD`；
++ `/dev/xvdd`：`SSD`盘，用于作为`Ceph`的缓存`OSD`以及日志盘；
+
+|节点|磁盘|
+|:----:|:----:|
+|node2|`/dev/xvda`、`/dev/xvdb`、`/dev/xvdc`、`/dev/xvdd`|
+|node3|`/dev/xvda`、`/dev/xvdb`、`/dev/xvdc`、`/dev/xvdd`|
+|node4|`/dev/xvda`、`/dev/xvdb`、`/dev/xvdc`、`/dev/xvdd`|
+
 
 ### Deploy
 
@@ -45,68 +58,76 @@ tags: [Ceph]
 
 #### CentOS系统
 
-+ 安装`NTP`服务：
+##### 安装`NTP`服务
 
 ```bash
 $ \cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 $ yum install -y chrony
 ```
 
-+ 配置服务：
+##### 配置服务
 
 ```bash
 $ vim /etc/chrony.conf
 ```
 
++ 请将其他的`server`与`pool`注释掉；
+
 ```text
-# 请将其他的server注释掉
 server 0.cn.pool.ntp.org iburst
 server 1.cn.pool.ntp.org iburst
 server 2.cn.pool.ntp.org iburst
 server 3.cn.pool.ntp.org iburst
 ```
 
-+ 启动`NTP`服务并设置开机自启
+##### 启动`NTP`服务并设置开机自启
+
++ 设置服务随系统开机自启
 
 ```bash
-# 随系统开机自启
 $ systemctl enable chronyd.service
+```
 
-# 启动NTP服务
++ 启动`NTP`服务：
+
+```bash
 $ systemctl start chronyd.service
 ```
 
 #### Ubuntu系统
 
-+ 安装`NTP`服务：
+##### 安装`NTP`服务
 
 ```bash
 $ \cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 $ apt install -y chrony
 ```
 
-+ 配置服务：
+##### 配置服务
 
 ```bash
 $ vim /etc/chrony/chrony.conf
 ```
 
++ 请将其他的`server`与`pool`注释掉；
+
 ```text
-# 请将其他的server注释掉
-server cn.pool.ntp.org iburst
+server 0.cn.pool.ntp.org iburst
+server 1.cn.pool.ntp.org iburst
+server 2.cn.pool.ntp.org iburst
+server 3.cn.pool.ntp.org iburst
 ```
 
-+ 重启`NTP`服务
+##### 重启`NTP`服务
 
 ```bash
-# 重启NTP服务
 $ service chrony restart
 ```
 
 
 ### 配置主机名及主机名解析
 
-+ 修改各节点的主机名：
+#### 修改各节点的主机名
 
 ```bash
 $ vim /etc/hostname
@@ -116,7 +137,7 @@ $ vim /etc/hostname
 node1
 ```
 
-+ 修改各节点的主机名解析：
+#### 修改各节点的主机名解析
 
 ```bash
 $ vim /etc/hosts
@@ -278,32 +299,32 @@ $ ssh-copy-id root@172.18.50.93
 
 #### CentOS系统
 
-+ 导入密钥：
+##### 导入密钥
 
 ```bash
 $ rpm --import 'http://mirrors.ustc.edu.cn/ceph/keys/release.asc'
 ```
 
-+ 安装`ceph-deploy`：
+##### 安装`ceph-deploy`
 
 ```bash
 $ yum install -y ceph-deploy
 ```
 
-+ 创建目录：
+##### 创建目录
 
 ```bash
 $ mkdir /ceph-deploy/my-cluster
 $ cd /ceph-deploy/my-cluster
 ```
 
-+ 添加`Monitor`节点：
+##### 添加`Monitor`节点
 
 ```bash
-$ ceph-deploy new node1
+$ ceph-deploy new node1 node2 node3
 ```
 
-+ 创建配置文件：
+##### 创建配置文件
 
 ```bash
 $ vim ceph.conf
@@ -317,12 +338,13 @@ osd_pool_default min size = 1
 
 osd_pool_default_pg_num = 512
 osd_pool_default_pgp_num = 512
+
 rbd_default_features = 3
 # 节点重启后不更新CRUSH map，防止我们自定义的map丢失
 osd_crush_update_on_start = false
 ```
 
-+ 设置`USTC`的`Ceph`源：
+##### 设置`USTC`的`Ceph`源
 
 ```bash
 $ echo 'export CEPH_DEPLOY_REPO_URL=http://mirrors.ustc.edu.cn/ceph/rpm-jewel/el7' >> /etc/profile
@@ -330,93 +352,34 @@ $ echo 'export CEPH_DEPLOY_GPG_URL=http://mirrors.ustc.edu.cn/ceph/keys/release.
 $ source /etc/profile
 ```
 
-+ 安装`Ceph`：
-
-```bash
-$ ceph-deploy install node1 node2 node3
-```
-
-+ 初始化`Monitor`节点并收集密钥：
-
-```bash
-$ ceph-deploy mon create-initial
-```
-
-+ 获取`OSD`节点的磁盘信息：
-
-```bash
-$ ceph-deploy disk list node1 node2 node3
-```
-
-+ 格式化磁盘：
-
-```bash
-$ ceph-deploy disk zap node1:/dev/xvdb node1:/dev/xvdc node1:/dev/xvdd
-$ ceph-deploy disk zap node2:/dev/xvdb node2:/dev/xvdc node2:/dev/xvdd
-$ ceph-deploy disk zap node3:/dev/xvdb node3:/dev/xvdc node3:/dev/xvdd
-```
-
-+ 准备`OSDs`：
-
-```bash
-# 命令格式：
-$ ceph-deploy osd prepare {node-name}:{data-disk}[:{journal-disk}]
-# journal-disk为可选项，用于存放日志，一般使用SSD存储，以提高集群性能
-
-# 示例
-$ ceph-deploy osd prepare node1:/dev/xvdb:/dev/xvdd node1:/dev/xvdc:/dev/xvdd
-$ ceph-deploy osd prepare node2:/dev/xvdb:/dev/xvdd node2:/dev/xvdc:/dev/xvdd
-$ ceph-deploy osd prepare node3:/dev/xvdb:/dev/xvdd node3:/dev/xvdc:/dev/xvdd
-```
-
-+ 激活`OSDs`：
-
-```bash
-$ ceph-deploy osd activate node1:/dev/xvdb1:/dev/xvdd1 node1:/dev/xvdc1:/dev/xvdd2
-$ ceph-deploy osd activate node2:/dev/xvdb1:/dev/xvdd1 node2:/dev/xvdc1:/dev/xvdd2
-$ ceph-deploy osd activate node3:/dev/xvdb1:/dev/xvdd1 node3:/dev/xvdc1:/dev/xvdd2
-```
-
-+ 分发配置文件及密钥，方便使用`Ceph CLI`：
-
-```bash
-$ ceph-deploy admin deploy node1 node2 node3
-```
-
-+ 检查集群的健康度：
-
-```bash
-$ ceph health
-```
-
 #### Ubuntu系统
 
-+ 导入密钥：
+##### 导入密钥
 
 ```bash
 $ wget -q -O- 'http://mirrors.ustc.edu.cn/ceph/keys/release.asc' | sudo apt-key add -
 ```
 
-+ 安装`ceph-deploy`：
+##### 安装`ceph-deploy`
 
 ```bash
 $ apt install -y ceph-deploy
 ```
 
-+ 创建目录：
+##### 创建目录
 
 ```bash
 $ mkdir /ceph-deploy/my-cluster
 $ cd /ceph-deploy/my-cluster
 ```
 
-+ 添加`Monitor`节点：
+##### 添加`Monitor`节点
 
 ```bash
-$ ceph-deploy new node1
+$ ceph-deploy new node1 node2 node3
 ```
 
-+ 创建配置文件：
+##### 创建配置文件
 
 ```bash
 $ vim ceph.conf
@@ -425,14 +388,15 @@ $ vim ceph.conf
 ```text
 osd_pool_default_size = 2
 
-osd_pool_default_pg_num = 128
-osd_pool_default_pgp_num = 128
+osd_pool_default_pg_num = 512
+osd_pool_default_pgp_num = 512
+
 rbd_default_features = 3
 # 节点重启后不更新CRUSH map，防止我们自定义的map丢失
 osd_crush_update_on_start = false
 ```
 
-+ 设置`USTC`的`Ceph`源：
+##### 设置`USTC`的`Ceph`源
 
 ```bash
 $ echo 'export CEPH_DEPLOY_REPO_URL=http://mirrors.ustc.edu.cn/ceph/debian-jewel' >> /etc/profile
@@ -440,25 +404,27 @@ $ echo 'export CEPH_DEPLOY_GPG_URL=http://mirrors.ustc.edu.cn/ceph/keys/release.
 $ source /etc/profile
 ```
 
-+ 安装`Ceph`：
+#### CentOS/Ubuntu系统
+
+##### 安装`Ceph`
 
 ```bash
 $ ceph-deploy install node1 node2 node3
 ```
 
-+ 初始化`Monitor`节点并收集密钥：
+##### 初始化`Monitor`节点并收集密钥
 
 ```bash
 $ ceph-deploy mon create-initial
 ```
 
-+ 获取`OSD`节点的磁盘信息：
+##### 获取`OSD`节点的磁盘信息
 
 ```bash
 $ ceph-deploy disk list node1 node2 node3
 ```
 
-+ 格式化磁盘：
+##### 清空并格式化磁盘
 
 ```bash
 $ ceph-deploy disk zap node1:/dev/xvdb node1:/dev/xvdc node1:/dev/xvdd
@@ -466,10 +432,10 @@ $ ceph-deploy disk zap node2:/dev/xvdb node2:/dev/xvdc node2:/dev/xvdd
 $ ceph-deploy disk zap node3:/dev/xvdb node3:/dev/xvdc node3:/dev/xvdd
 ```
 
-+ 准备`OSDs`：
+##### 准备`OSDs`的`SATA`磁盘
 
 ```bash
-# 命令格式：
+# 命令格式
 $ ceph-deploy osd prepare {node-name}:{data-disk}[:{journal-disk}]
 # journal-disk为可选项，用于存放日志，一般使用SSD存储，以提高集群性能
 
@@ -479,39 +445,331 @@ $ ceph-deploy osd prepare node2:/dev/xvdb:/dev/xvdd node2:/dev/xvdc:/dev/xvdd
 $ ceph-deploy osd prepare node3:/dev/xvdb:/dev/xvdd node3:/dev/xvdc:/dev/xvdd
 ```
 
-+ 激活`OSDs`：
+##### 划分`Ceph`的缓存区(`SSD`磁盘)
+
+```text
+# 将SSD磁盘剩余的磁盘作为缓存OSD，其中{END}为上一个分区的结束标志
+
+$ parted /dev/xvdd
+(parted) print
+(parted) mkpart cache xfs {END} -1
+(parted) print
+(parted) quit
+```
+
+##### 准备`OSDs`的`SSD`磁盘
 
 ```bash
+# 命令格式
+$ ceph-deploy osd prepare {NodeName}:{SSD_Disk_Name}{Index}
+
+# 示例
+$ ceph-deploy osd prepare node1:/dev/xvdd3
+$ ceph-deploy osd prepare node2:/dev/xvdd3
+$ ceph-deploy osd prepare node3:/dev/xvdd3
+```
+
+##### 激活`OSDs`的`SATA`磁盘
+
+```bash
+# 命令格式
+$ ceph-deploy osd activate {NodeName}:{Sata_Disk_Name}{Index}:{SSD_Disk_Name}{Index}
+
+# 示例
 $ ceph-deploy osd activate node1:/dev/xvdb1:/dev/xvdd1 node1:/dev/xvdc1:/dev/xvdd2
 $ ceph-deploy osd activate node2:/dev/xvdb1:/dev/xvdd1 node2:/dev/xvdc1:/dev/xvdd2
 $ ceph-deploy osd activate node3:/dev/xvdb1:/dev/xvdd1 node3:/dev/xvdc1:/dev/xvdd2
 ```
 
-+ 分发配置文件及密钥，方便使用`Ceph CLI`：
+##### 激活`OSDs`的`SSD`磁盘
+
+```bash
+# 命令格式
+$ ceph-deploy osd activate {NodeName}:{SSD_Disk_Name}{Index}
+
+# 示例
+$ ceph-deploy osd activate node1:/dev/xvdd3
+$ ceph-deploy osd activate node2:/dev/xvdd3
+$ ceph-deploy osd activate node3:/dev/xvdd3
+```
+
+##### 为`OSDs`的磁盘添加标签
+
++ 列出`Ceph`的所有磁盘：
+
+```bash
+$ ceph-disk list
+```
+
++ 设置`SSD's OSD`的标签为`Ceph Data`：
+
+```bash
+# 格式
+sgdisk --typecode=<Index>:4fbd7e29-9d25-41b8-afd0-062c0ceff05d -- {SSD_Disk_Name}
+
+# 示例
+sgdisk --typecode=3:4fbd7e29-9d25-41b8-afd0-062c0ceff05d -- /dev/xvdd
+```
+
++ 设置`SSD's OSD`的标签为`Ceph Journal`(可选操作)：
+
+```bash
+# 格式
+sgdisk --typecode=<Index>:45b0969e-9b03-4f30-b4c6-b4b80ceff106 -- {SSD_Disk_Name}
+
+# 示例
+sgdisk --typecode=1:45b0969e-9b03-4f30-b4c6-b4b80ceff106 -- /dev/xvdd
+```
+
+##### 手动编辑`Crushmap`的映射
+
++ 导出`crushmap`密文：
+
+```bash
+$ ceph osd getcrushmap -o crushmap.dump
+```
+
++ 将`crushmap`密文转换为明文：
+
+```bash
+$ crushtool -d crushmap.dump -o crushmap.txt
+```
+
++ 编辑`crushmap`明文：
+
+```bash
+$ vim crushmap.txt
+```
+
+```text
+# begin crush map
+tunable choose_local_tries 0
+tunable choose_local_fallback_tries 0
+tunable choose_total_tries 50
+tunable chooseleaf_descend_once 1
+tunable chooseleaf_vary_r 1
+tunable straw_calc_version 1
+
+# devices
+device 0 osd.0
+device 1 osd.1
+device 2 osd.2
+device 3 osd.3
+device 4 osd.4
+device 5 osd.5
+device 6 osd.6
+device 7 osd.7
+device 8 osd.8
+
+# types
+type 0 osd
+type 1 host
+type 2 chassis
+type 3 rack
+type 4 row
+type 5 pdu
+type 6 pod
+type 7 room
+type 8 datacenter
+type 9 region
+type 10 root
+
+# buckets
+host node1-sata {
+    id -3       # do not change unnecessarily
+    # weight 2.000
+    alg straw
+    hash 0    # rjenkins1
+    item osd.0 weight 1.000
+    item osd.1 weight 1.000
+
+}
+
+host node2-sata {
+    id -4        # do not change unnecessarily
+    # weight 2.000
+    alg straw
+    hash 0    # rjenkins1
+    item osd.2 weight 1.000
+    item osd.3 weight 1.000
+
+    item osd.6 weight 1.000
+    item osd.7 weight 1.000
+}
+host node3-sata {
+    id -5        # do not change unnecessarily
+    # weight 2.000
+    alg straw
+    hash 0    # rjenkins1
+    item osd.4 weight 1.000
+    item osd.5 weight 1.000
+}
+
+host node1-ssd {
+    id -6
+    # weight 1.000
+    alg straw
+    hash 0
+    item osd.6 weight 1.000
+}
+
+host node2-ssd {
+    id -7
+    # weight 1.000
+    alg straw
+    hash 0
+    item osd.7 weight 1.000
+}
+
+host node3-ssd {
+    id -8
+    # weight 1.000
+    alg straw
+    hash 0
+    item osd.8 weight 1.000
+}
+
+root sata {
+    id -1        # do not change unnecessarily
+    # weight 6.000
+    alg straw
+    hash 0    # rjenkins1
+    item node1-sata weight 2.000
+    item node2-sata weight 2.000
+    item node3-sata weight 2.000
+}
+
+root ssd {
+    id -2
+    # weight 3.000
+    alg straw
+    hash 0    # rjenkins1
+    item node1-ssd weight 1.000
+    item node2-ssd weight 1.000
+    item node3-ssd weight 1.000 
+}
+
+# rules
+rule sata {
+    ruleset 0
+    type replicated
+    min_size 1
+    max_size 10
+    step take sata
+    step chooseleaf firstn 0 type host
+    step emit
+}
+
+rule ssd {
+    ruleset 1
+    type replicated
+    min_size 1
+    max_size 10
+    step take ssd
+    step chooseleaf firstn 0 type host
+    step emit
+}
+
+# end crush map
+```
+
++ 生成`crushmap`密文：
+
+```bash
+$ crushtool -c crushmap.txt -o crushmap.done
+```
+
++ 导入`crushmap`密文：
+
+```bash
+$ ceph osd setcrushmap -i crushmap.done
+```
+
++ 删除临时文件
+
+```bash
+$ rm -f crushmap.*
+```
+
+##### 分发配置文件及密钥，方便使用`Ceph CLI`
 
 ```bash
 $ ceph-deploy admin deploy node1 node2 node3
 ```
 
-+ 检查集群的健康度：
+##### 检查集群的健康度
 
 ```bash
 $ ceph health
+$ ceph -w
+$ ceph -s
 ```
 
-### 重置集群
+### 卸载集群
 
-+ 若在搭建集群时，出现错误，可使用以下命令清除`Ceph`及其数据：
++ 若在搭建集群时，出现错误，可使用以下命令清除；
+
+#### 卸载`Ceph`
 
 ```bash
 $ ceph-deploy purge node1 node2 node3
+```
+
+#### 清除数据
+
+```bash
 $ ceph-deploy purgedata node1 node2 node3
+```
+
+#### 清除密钥
+
+```bash
 $ ceph-deploy forgetkeys
+```
+
+#### 清除单个分区
+
+```bash
+$ parted /dev/sde -s -- print
+$ parted /dev/sde -s -- rm {Num}
+```
+
+#### 清除所有分区
+
+##### CentOS系统
+
+```bash
+$ yum install -y gdisk
+```
+
+##### Ubuntu系统
+
+```bash
+$ apt install -y gdisk
+```
+
+##### CentOS/Ubuntu系统
+
+```bash
+# 命令格式
+$ sgdisk --zap-all -- {DEV}
+
+# 示例
+$ sgdisk --zap-all -- /dev/xvdd
+```
+
+### 删除默认的`Pool`
+
++ `Luminous`版本以后将不再自动创建默认`Pool`；
+
+```bash
+$ ceph osd pool ls detail
+$ ceph osd pool delete rbd rbd --yes-i-really-really-mean-it
 ```
 
 ## 扩展阅读
 
-### 在线添加`OSD`节点：
+### 在线添加`OSD`节点
 
 #### OSD节点
 
@@ -525,13 +783,13 @@ $ ceph-deploy forgetkeys
 
 #### Deploy节点
 
-+ 切换至配置目录：
+##### 切换至配置目录
 
 ```bash
 $ cd /ceph-deploy/my-cluster
 ```
 
-+ 设置`USTC`的`Ceph`源：
+##### 设置`USTC`的`Ceph`源
 
 ```bash
 $ echo 'export CEPH_DEPLOY_REPO_URL=http://mirrors.ustc.edu.cn/ceph/debian-jewel' >> /etc/profile
@@ -539,55 +797,128 @@ $ echo 'export CEPH_DEPLOY_GPG_URL=http://mirrors.ustc.edu.cn/ceph/keys/release.
 $ source /etc/profile
 ```
 
-+ 安装`Ceph`：
+##### 安装`Ceph`：
 
 ```bash
 $ ceph-deploy install node4
 ```
 
-+ 获取`OSD`节点的磁盘信息：
+##### 获取`OSD`节点的磁盘信息
 
 ```bash
 $ ceph-deploy disk list node4
 ```
 
-+ 格式化磁盘：
+##### 格式化磁盘：
 
 ```bash
 $ ceph-deploy disk zap node4:/dev/xvdb node4:/dev/xvdc node4:/dev/xvdd
 ```
 
-+ 准备`OSDs`：
+##### 准备`OSDs`的`SATA`磁盘
 
 ```bash
+# 命令格式
+$ ceph-deploy osd prepare {node-name}:{data-disk}[:{journal-disk}]
+# journal-disk为可选项，用于存放日志，一般使用SSD存储，以提高集群性能
+
+# 示例
 $ ceph-deploy osd prepare node4:/dev/xvdb:/dev/xvdd node4:/dev/xvdc:/dev/xvdd
 ```
 
-+ 激活`OSDs`：
+##### 划分`Ceph`的缓存区(`SSD`磁盘)
+
+```text
+# 将SSD磁盘剩余的磁盘作为缓存OSD，其中{END}为上一个分区的结束标志
+
+$ parted /dev/xvdd
+(parted) print
+(parted) mkpart cache xfs {END} -1
+(parted) print
+(parted) quit
+```
+
+##### 准备`OSDs`的`SSD`磁盘
 
 ```bash
+# 命令格式
+$ ceph-deploy osd prepare {NodeName}:{SSD_Disk_Name}{Index}
+
+# 示例
+$ ceph-deploy osd prepare node4:/dev/xvdd3
+```
+
+##### 激活`OSDs`的`SATA`磁盘
+
+```bash
+# 命令格式
+$ ceph-deploy osd activate {NodeName}:{Sata_Disk_Name}{Index}:{SSD_Disk_Name}{Index}
+
+# 示例
 $ ceph-deploy osd activate node4:/dev/xvdb1:/dev/xvdd1 node4:/dev/xvdc1:/dev/xvdd2
 ```
 
-+ 分发配置文件及密钥，方便使用`Ceph CLI`：
+##### 激活`OSDs`的`SSD`磁盘
+
+```bash
+# 命令格式
+$ ceph-deploy osd activate {NodeName}:{SSD_Disk_Name}{Index}
+
+# 示例
+$ ceph-deploy osd activate node4:/dev/xvdd3
+```
+
+##### 为`OSDs`的磁盘添加标签
+
++ 列出`Ceph`的所有磁盘：
+
+```bash
+$ ceph-disk list
+```
+
++ 设置`SSD's OSD`的标签为`Ceph Data`：
+
+```bash
+# 格式
+sgdisk --typecode=<Index>:4fbd7e29-9d25-41b8-afd0-062c0ceff05d -- {SSD_Disk_Name}
+
+# 示例
+sgdisk --typecode=3:4fbd7e29-9d25-41b8-afd0-062c0ceff05d -- /dev/xvdd
+```
+
++ 设置`SSD's OSD`的标签为`Ceph Journal`(可选操作)：
+
+```bash
+# 格式
+sgdisk --typecode=<Index>:45b0969e-9b03-4f30-b4c6-b4b80ceff106 -- {SSD_Disk_Name}
+
+# 示例
+sgdisk --typecode=1:45b0969e-9b03-4f30-b4c6-b4b80ceff106 -- /dev/xvdd
+```
+
+##### 手动编辑`Crushmap`的映射
+
++ 请参考前文的文档，在相应的位置添加`node4`即可；
+
+##### 分发配置文件及密钥，方便使用`Ceph CLI`：
 
 ```bash
 $ ceph-deploy admin node4
 ```
 
-+ 检查集群的健康度：
+##### 检查集群的健康度
 
 ```bash
 $ ceph health
 ```
 
-+ 获取`OSD`树：
+##### 获取`OSD`树
 
 ```bash
 $ ceph osd tree
 ```
 
-### 在线添加`Monitors`节点：
+### 在线添加`Monitors`节点
 
 #### Monitors节点
 

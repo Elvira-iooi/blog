@@ -85,7 +85,10 @@ $ vim /etc/chrony.conf
 + 请将其他`server`或`pool`注释或删除并添加以下`server`：
 
 ```text
-server cn.pool.ntp.org iburst
+server 0.cn.pool.ntp.org iburst
+server 1.cn.pool.ntp.org iburst
+server 2.cn.pool.ntp.org iburst
+server 3.cn.pool.ntp.org iburst
 ```
 
 #### 启动`NTP`服务并设置开机自启
@@ -274,10 +277,10 @@ socket = /var/lib/mysql/mysql.sock
 log-error = /var/log/mysqld.log
 character_set_server = utf8mb4
 user = mysql
-bind-address = 0.0.0.0
+bind-address = *
 default_storage_engine = InnoDB
 max_allowed_packet = 512M
-max_connections = 2048
+max_connections = 20480
 open_files_limit = 65535
 symbolic-links=1
 key_buffer_size = 64M
@@ -470,9 +473,9 @@ mysql-js> \exit
 
 ### 安装Keepalived
 
-+ 此`Keepalived`使用`rpm-build`制作，仅适合`CentOS-7.3.1611-x64`。
-+ 下载地址：[百度云]()。
-+ 密码：``。
++ 此`Keepalived`使用`rpm-build`制作，仅适合`CentOS-7.3.1611-x64`；
++ 下载地址：[百度云](http://pan.baidu.com/s/1jH7CUmq)；
++ 密码：`e0jg`；
 
 ```bash
 $ rpm -ivh keepalived-1.3.5-1.x86_64.rpm
@@ -518,6 +521,24 @@ vrrp_instance VI_1 {
 ```bash
 $ systemctl start keepalived.service
 $ systemctl enable keepalived.service
+```
+
+### 优化并行组复制
+
++ 加快`Slave`节点复制`Master`节点数据的速度；
+
+```bash
+$ vim /etc/my.cnf
+```
+
+```text
+[mysqld]
+...
+master_info_repository = TABLE
+relay_log_info_repository = TABLE
+relay_log_recovery = ON
+slave-parallel-type = LOGICAL_CLOCK
+slave-parallel-workers = 16
 ```
 
 ## 模拟故障
@@ -601,7 +622,10 @@ $ systemctl start mysqld.service
 $ mysqlsh --uri root@localhost:6446
 mysql-js> var cluster = dba.getCluster("HandgeCluster")
 mysql-js> cluster.rejoinInstance('root@172.18.50.81:3306')
+
+# 获取集群中的状态
 mysql-js> cluster.status()
+# 获取集群中的实例
 mysql-js> cluster.describe()
 ```
 
@@ -609,12 +633,40 @@ mysql-js> cluster.describe()
 
 ### 断电故障
 
-+ 在启动`InnoDB`节点的`MySQL`服务以后。
++ 在启动`InnoDB`节点的`MySQL`服务以后；
 + 需要连接到主节点，重启集群：
 
 ```text
 $ mysqlsh --uri root@172.18.50.81:3306
 mysql-js> dba.rebootClusterFromCompleteOutage()
 ```
+
+### 删除实例
+
+```text
+mysql-js> var cluster = dba.getCluster("HandgeCluster")
+mysql-js> cluster.removeInstance('172.18.50.83:3306')
+```
+
+### 模拟并发连接
+
++ 使用`MySQL`官方提供的`mysqlslap`工具；
+
+```text
+# 详细格式
+$ mysqlslap --user root --password --host 172.18.50.21 --port 3306 --auto-generate-sql --auto-generate-sql-add-autoincrement --concurrency 100 --number-of-queries 10000
+
+# 精简格式
+$ mysqlslap -u root -p -h 172.18.50.21 -P 3306 -a --auto-generate-sql-add-autoincrement -c 100 --number-of-queries 10000
+```
+
++ `--user`：配置登录用户；
++ `--password`：使用密码登录；
++ `--host`：连接的主机地址；
++ `--port`：连接的端口号；
++ `--auto-generate-sql`：自动生成`SQL`语句；
++ `--auto-generate-sql-add-autoincrement`：向自动生成的表中添加列`AUTO_INCREMENT`；
++ `--concurrency`：并发数，可以理解为客户端个数；
++ `--number-of-queries`：所有客户端发出的总请求数；
 
 ***

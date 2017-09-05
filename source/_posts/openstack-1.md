@@ -209,7 +209,10 @@ $ vim /etc/chrony/chrony.conf
 ```
 # 请注释掉其他server
 # controller节点
-server cn.pool.ntp.org iburst 
+server 0.cn.pool.ntp.org iburst
+server 1.cn.pool.ntp.org iburst
+server 2.cn.pool.ntp.org iburst
+server 3.cn.pool.ntp.org iburst
 
 # 其他节点（同步controller节点）
 server controller iburst
