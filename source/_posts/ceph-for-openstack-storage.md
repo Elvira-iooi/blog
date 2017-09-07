@@ -36,6 +36,34 @@ $ ceph osd pool create vms.cache 1024
 $ ceph osd pool create backups.cache 1024
 ```
 
+### 删除相应的`Pool`(备用)
+
+```bash
+$ ceph osd pool delete images images --yes-i-really-really-mean-it
+$ ceph osd pool delete volumes volumes --yes-i-really-really-mean-it
+$ ceph osd pool delete vms vms --yes-i-really-really-mean-it
+$ ceph osd pool delete backups backups --yes-i-really-really-mean-it
+
+$ ceph osd pool delete images.cache images.cache --yes-i-really-really-mean-it
+$ ceph osd pool delete volumes.cache volumes.cache --yes-i-really-really-mean-it
+$ ceph osd pool delete vms.cache vms.cache --yes-i-really-really-mean-it
+$ ceph osd pool delete backups.cache backups.cache --yes-i-really-really-mean-it
+```
+
+### 更新相应`Pool`的属性值(备用)
+
+```bash
+$ ceph osd pool set images pg_num 512
+$ ceph osd pool set volumes pg_num 512
+$ ceph osd pool set vms pg_num 512
+$ ceph osd pool set backups pg_num 512
+
+$ ceph osd pool set images pgp_num 512
+$ ceph osd pool set volumes pgp_num 512
+$ ceph osd pool set vms pgp_num 512
+$ ceph osd pool set backups pgp_num 512
+```
+
 ### 将不同的`Pool`加入到对应的`Crush Map`中
 
 ```bash

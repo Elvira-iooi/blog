@@ -592,9 +592,6 @@ host node2-sata {
     hash 0    # rjenkins1
     item osd.2 weight 1.000
     item osd.3 weight 1.000
-
-    item osd.6 weight 1.000
-    item osd.7 weight 1.000
 }
 host node3-sata {
     id -5        # do not change unnecessarily
