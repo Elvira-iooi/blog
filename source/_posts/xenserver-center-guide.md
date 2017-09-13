@@ -6,7 +6,7 @@ tags: [Xen]
 
 ## 简介
 
-+ 在此之前我们已经学习了[《如何安装`XenServer-7.X`》](https://www.xiaocoder.com/2017/09/04/xenserver-installation-guide/)，接下来让我们继续学习如何安装`XenCenter`并连接`XenServer`进行管理；
++ 在此之前我们已经学习了[《如何安装XenServer-7.X》](https://www.xiaocoder.com/2017/09/04/xenserver-installation-guide/)，接下来让我们继续学习如何安装`XenCenter`并连接`XenServer`进行管理；
 + `XenCenter`是由`Citrix`(思杰)官方提供，允许在`Windows`操作系统上管理`XenServer`环境，从而完成对虚拟机的管理；
 
 ## 获取
@@ -175,6 +175,8 @@ $ cd /mnt/xs-tools/Linux/
 $ ./install.sh
 $ cd ~ && umount /mnt/xs-tools/ && rm -rf /mnt/xs-tools/
 ```
+
++ 手动弹出镜像`guest-tools.iso`；
 
 + 清空历史记录并关机：
 

@@ -46,11 +46,20 @@ $ apt-get install -y apt-transport-https \
 $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 ```
 
-+ 添加Docker的`CE`存储库
++ 添加Docker的`CE`存储库(官网)
 
 ```bash
 $ add-apt-repository \
     "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) \
+    stable"
+```
+
++ 添加Docker的`CE`存储库(国内)
+
+```bash
+$ add-apt-repository \
+    "deb [arch=amd64] http://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu \
     $(lsb_release -cs) \
     stable"
 ```
@@ -79,12 +88,20 @@ $ yum remove docker \
 $ yum install -y yum-utils
 ```
 
-+ 添加Docker的`CE`存储库
++ 添加Docker的`CE`存储库(官网)
 
 ```bash
 $ yum-config-manager \
     --add-repo \
     https://download.docker.com/linux/centos/docker-ce.repo
+```
+
++ 添加Docker的`CE`存储库(国内)
+
+```bash
+$ yum-config-manager \
+    --add-repo \
+    http://mirrors.ustc.edu.cn/docker-ce/linux/centos/docker-ce.repo
 ```
 
 + 更新软件包的索引列表

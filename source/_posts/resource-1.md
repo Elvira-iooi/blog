@@ -15,13 +15,13 @@ tags: [Resource]
 + 若要使用`https`协议的源，请安装以下软件：
 
 ```bash
-shell> apt-get install -y apt-transport-https
+$ apt-get install -y apt-transport-https
 ```
 
 + 编辑配置文件
 
 ```bash
-shell> vim /etc/apt/sources.list
+$ vim /etc/apt/sources.list
 ```
 
 ### 阿里云源
@@ -153,7 +153,7 @@ deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-security main restricted
 ### 更新软件包索引
 
 ```bash
-shell> apt-get update
+$ apt-get update
 ```
 
 ## CentOS系统
@@ -161,7 +161,7 @@ shell> apt-get update
 + 编辑配置文件
 
 ```bash
-shell> vim /etc/yum.repos.d/CentOS-Base.repo
+$ vim /etc/yum.repos.d/CentOS-Base.repo
 ```
 
 ### 阿里云源
@@ -170,20 +170,20 @@ shell> vim /etc/yum.repos.d/CentOS-Base.repo
 
 ```bash
 # 若无wget命令, 可使用以下命令安装
-shell> yum -y install wget
+$ yum -y install wget
 
 # 使用wget下载
-shell> wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo
+$ wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo
 ```
 
 #### CentOS-7
 
 ```bash
 # 若无wget命令, 可使用以下命令安装
-shell> yum -y install wget
+$ yum -y install wget
 
 # 使用wget下载
-shell> wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+$ wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
 ```
 
 ### 中科大源
@@ -386,7 +386,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
 ### 更新软件包索引
 
 ```bash
-shell> yum makecache
+$ yum makecache fast
 ```
 
 ***

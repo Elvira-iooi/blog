@@ -173,6 +173,7 @@ mount -t ext4 -o defaults UUID=9e2d1258-f016-43a0-965e-8506875d93f5 /iso
 + 添加为开机自启服务；
 
 ```bash
+$ chmod +x /etc/systemd/system/activate_iso_storage.sh
 $ systemctl enable activate_iso_storage.service
 ```
 
