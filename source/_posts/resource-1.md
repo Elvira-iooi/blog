@@ -192,51 +192,23 @@ $ wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Cento
 
 ```text
 # CentOS-Base.repo
-#
-# The mirror system uses the connecting IP address of the client and the
-# update status of each mirror to pick mirrors that are updated to and
-# geographically close to the client.  You should use this for CentOS updates
-# unless you are manually picking other mirrors.
-#
-# If the mirrorlist= does not work for you, as a fall back you can try the
-# remarked out baseurl= line instead.
-#
-#
- 
+
 [base]
 name=CentOS-$releasever - Base - mirrors.ustc.edu.cn
 baseurl=https://mirrors.ustc.edu.cn/centos/$releasever/os/$basearch/
 gpgcheck=1
 gpgkey=https://mirrors.ustc.edu.cn/centos/RPM-GPG-KEY-CentOS-6
- 
-# released updates
+
 [updates]
 name=CentOS-$releasever - Updates - mirrors.ustc.edu.cn
 baseurl=https://mirrors.ustc.edu.cn/centos/$releasever/updates/$basearch/
 gpgcheck=1
 gpgkey=https://mirrors.ustc.edu.cn/centos/RPM-GPG-KEY-CentOS-6
- 
-# additional packages that may be useful
+
 [extras]
 name=CentOS-$releasever - Extras - mirrors.ustc.edu.cn
 baseurl=https://mirrors.ustc.edu.cn/centos/$releasever/extras/$basearch/
 gpgcheck=1
-gpgkey=https://mirrors.ustc.edu.cn/centos/RPM-GPG-KEY-CentOS-6
- 
-# additional packages that extend functionality of existing packages
-[centosplus]
-name=CentOS-$releasever - Plus - mirrors.ustc.edu.cn
-baseurl=https://mirrors.ustc.edu.cn/centos/$releasever/centosplus/$basearch/
-gpgcheck=1
-enabled=0
-gpgkey=https://mirrors.ustc.edu.cn/centos/RPM-GPG-KEY-CentOS-6
- 
-# contrib - packages by Centos Users
-[contrib]
-name=CentOS-$releasever - Contrib - mirrors.ustc.edu.cn
-baseurl=https://mirrors.ustc.edu.cn/centos/$releasever/contrib/$basearch/
-gpgcheck=1
-enabled=0
 gpgkey=https://mirrors.ustc.edu.cn/centos/RPM-GPG-KEY-CentOS-6
 ```
 
@@ -244,43 +216,23 @@ gpgkey=https://mirrors.ustc.edu.cn/centos/RPM-GPG-KEY-CentOS-6
 
 ```text
 # CentOS-Base.repo
-#
-# The mirror system uses the connecting IP address of the client and the
-# update status of each mirror to pick mirrors that are updated to and
-# geographically close to the client.  You should use this for CentOS updates
-# unless you are manually picking other mirrors.
-#
-# If the mirrorlist= does not work for you, as a fall back you can try the
-# remarked out baseurl= line instead.
-#
-#
- 
+
 [base]
 name=CentOS-$releasever - Base
 baseurl=https://mirrors.ustc.edu.cn/centos/$releasever/os/$basearch/
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
- 
-# released updates
+
 [updates]
 name=CentOS-$releasever - Updates
 baseurl=https://mirrors.ustc.edu.cn/centos/$releasever/updates/$basearch/
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
- 
-# additional packages that may be useful
+
 [extras]
 name=CentOS-$releasever - Extras
 baseurl=https://mirrors.ustc.edu.cn/centos/$releasever/extras/$basearch/
 gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
- 
-# additional packages that extend functionality of existing packages
-[centosplus]
-name=CentOS-$releasever - Plus
-baseurl=https://mirrors.ustc.edu.cn/centos/$releasever/centosplus/$basearch/
-gpgcheck=1
-enabled=0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 ```
 
@@ -290,16 +242,6 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 
 ```text
 # CentOS-Base.repo
-#
-# The mirror system uses the connecting IP address of the client and the
-# update status of each mirror to pick mirrors that are updated to and
-# geographically close to the client.  You should use this for CentOS updates
-# unless you are manually picking other mirrors.
-#
-# If the mirrorlist= does not work for you, as a fall back you can try the
-# remarked out baseurl= line instead.
-#
-#
 
 [base]
 name=CentOS-$releasever - Base
@@ -307,26 +249,16 @@ baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/os/$basearch/
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 
-# released updates
 [updates]
 name=CentOS-$releasever - Updates
 baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/updates/$basearch/
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 
-# additional packages that may be useful
 [extras]
 name=CentOS-$releasever - Extras
 baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/extras/$basearch/
 gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
-
-# additional packages that extend functionality of existing packages
-[centosplus]
-name=CentOS-$releasever - Plus
-baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/centosplus/$basearch/
-gpgcheck=1
-enabled=0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 ```
 
@@ -334,16 +266,6 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 
 ```text
 # CentOS-Base.repo
-#
-# The mirror system uses the connecting IP address of the client and the
-# update status of each mirror to pick mirrors that are updated to and
-# geographically close to the client.  You should use this for CentOS updates
-# unless you are manually picking other mirrors.
-#
-# If the mirrorlist= does not work for you, as a fall back you can try the
-# remarked out baseurl= line instead.
-#
-#
 
 [base]
 name=CentOS-$releasever - Base
@@ -351,36 +273,115 @@ baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/os/$basearch/
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
 
-# released updates
 [updates]
 name=CentOS-$releasever - Updates
 baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/updates/$basearch/
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
 
-# additional packages that may be useful
 [extras]
 name=CentOS-$releasever - Extras
 baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/extras/$basearch/
-#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+```
 
-# additional packages that extend functionality of existing packages
-[centosplus]
-name=CentOS-$releasever - Plus
-baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/centosplus/$basearch/
-gpgcheck=1
-enabled=0
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+### 更新软件包索引
 
-# contrib - packages by Centos Users
-[contrib]
-name=CentOS-$releasever - Contrib
-baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/contrib/$basearch/
-gpgcheck=1
-enabled=0
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+```bash
+$ yum makecache fast
+```
+
+## CentOS系统-EPEL
+
++ 编辑配置文件
+
+```bash
+$ vim /etc/yum.repos.d/eple.repo
+```
+
+### 阿里云源
+
+#### CentOS-6
+
+```bash
+# 若无wget命令, 可使用以下命令安装
+$ yum install -y wget
+```
+
+```bash
+$ wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-6.repo
+```
+
+#### CentOS-7
+
+```bash
+# 若无wget命令, 可使用以下命令安装
+$ yum -y install wget
+```
+
+```bash
+$ wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
+```
+
+### 中科大源
+
+#### CentOS-6
+
+```text
+# epel.repo
+
+[epel]
+name=Extra Packages for Enterprise Linux 6 - $basearch
+baseurl=http://mirrors.ustc.edu.cn/epel/6/$basearch
+failovermethod=priority
+enabled=1
+gpgcheck=1                                                                                                                                                                                     
+gpgkey=http://mirrors.ustc.edu.cn/epel/RPM-GPG-KEY-EPEL-6
+```
+
+#### CentOS-7
+
+```text
+# epel.repo
+
+[epel]
+name=Extra Packages for Enterprise Linux 7 - $basearch
+baseurl=http://mirrors.ustc.edu.cn/epel/7/$basearch
+failovermethod=priority
+enabled=1
+gpgcheck=1                                                                                                                                                                                     
+gpgkey=http://mirrors.ustc.edu.cn/epel/RPM-GPG-KEY-EPEL-7
+```
+
+### 清华大学源
+
+#### CentOS-6
+
+```text
+# epel.repo
+
+[epel]
+name=Extra Packages for Enterprise Linux 6 - $basearch
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/epel/6/$basearch
+failovermethod=priority
+enabled=1
+gpgcheck=1                                                                                                                                                                                     
+gpgkey=https://mirrors.tuna.tsinghua.edu.cn/epel/RPM-GPG-KEY-EPEL-6
+```
+
+#### CentOS-7
+
+```text
+# epel.repo
+
+[epel]
+name=Extra Packages for Enterprise Linux 7 - $basearch
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/epel/7/$basearch
+failovermethod=priority
+enabled=1
+gpgcheck=1                                                                                                                                                                                     
+gpgkey=https://mirrors.tuna.tsinghua.edu.cn/epel/RPM-GPG-KEY-EPEL-7
 ```
 
 ### 更新软件包索引

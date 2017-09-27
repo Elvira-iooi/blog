@@ -40,23 +40,26 @@ tags: [Install]
 // 转换Tab为Space
 "translate_tabs_to_spaces": true,
 // 添加行宽标尺
-"rulers": [80, 100],
+"rulers": [ 80, 100],
 // 显示空白字符
 "draw_white_space": "all",
 // 保存时自动去除行末空白
 "trim_trailing_white_space_on_save": false,
 // 保存时自动增加文件末尾换行
 "ensure_newline_at_eof_on_save": true,
+// 显示行号
+"line_numbers": true,
 ```
 
-### 安装`Package Control`
+### 安装Package Control
 
 + `Sublime Text 3`安装`Package Control`；
 + 使用`Ctrl + ~`，打开控制台，若无法打开控制台，可能为输入法占用了快捷键；
 + 安装完成后，重启`Sublime Text 3`；
++ 以下的链接可以失效，这是由于版本升级的原因，请到[官网](https://packagecontrol.io/installation)更新命令；
 
 ```text
-import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
+import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe013ee18cced0ef93d5f746d80ef60'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
 ```
 
 ### 安装常用插件
@@ -65,13 +68,17 @@ import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d
 + `AdvancedNewFile`：新建文件(`Ctrl + Alt + N`)；
 + `AutoFileName`：文件名；
 + `AutoPep8`：`Python`代码格式化(`Ctrl + Shift + 8`)；
++ `Alignment`：代码对齐；
 + `Boxy Theme`：Boxy主题；
 + `Boxy Theme Addon - Font Face`：`Boxy`主题用于设置字体；
 + `Emmet`：前端神器；
 + `ConvertToUTF8`：自动将文本转换为`UTF-8`格式；
 + `IMESupport`：解决输入法不跟随问题；
 + `SublimeLinter`：语法高亮；
-+ `SideBarEnhancements`：增强侧边栏功能；
++ `SideBarEnhancements`：增强侧边栏功能，[链接](https://github.com/SideBarEnhancements-org/SideBarEnhancements/releases)；
++ `ColorPicker`：取色器(`Ctrl + Shift + C`)；
++ `FileDiffs`：比较文件差异；
++ `MarkdownEditing`：`Markdown`编辑器插件；
 
 ### 主题设置
 + `Preferences >> Settings`
@@ -180,6 +187,15 @@ import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d
 + 打开与你选择主题名称相同的文件；
 + 替换`Sans-Serif`字体为您钟爱的字体；
 
+### 设置快捷键
+
+```text
+[
+    { "keys": ["ctrl+shift+c"], "command": "convert_to_utf8", "args": {"encoding": "UTF-8", "stamp": "0" } },
+    { "keys": ["ctrl+alt+c"], "command": "color_pick" }
+]
+```
+
 ### 注册码
 
 ```text
@@ -196,6 +212,22 @@ D304FA8D B1B4F0AF 8A76C7BA 0FA94D55
 FD032C30 AD5E7241 4EAA66ED 167D91FB
 55896B16 EA125C81 F550AF6B A6820916
 —— END LICENSE ——
+```
+
+```text
+----- BEGIN LICENSE -----
+TwitterInc
+200 User License
+EA7E-890007
+1D77F72E 390CDD93 4DCBA022 FAF60790
+61AA12C0 A37081C5 D0316412 4584D136
+94D7F7D4 95BC8C1C 527DA828 560BB037
+D1EDDD8C AE7B379F 50C9D69D B35179EF
+2FE898C4 8E4277A8 555CE714 E1FB0E43
+D5D52613 C3D12E98 BC49967F 7652EED2
+9D2D2E61 67610860 6D338B72 5CF95C69
+E36B85CC 84991F19 7575D828 470A92AB
+------ END LICENSE ------
 ```
 
 ***

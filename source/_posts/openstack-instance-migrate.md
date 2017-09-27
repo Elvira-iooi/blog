@@ -10,15 +10,103 @@ tags: [OpenStack]
 
 ## 迁移类型
 
-### 冷迁移
+### 冷迁移\调整规格
 
 + 冷迁移：云主机处于关闭状态或宕机状态，将云主机迁移到新节点，需要重启实例，才能正常工作。
+
+<!-- more -->
+
+#### Nova服务
+
+##### CentOS系统
+
++ 编辑配置文件：
+
+```bash
+$ vim /etc/nova/nova.conf
+```
+
+```text
+[DEFAULT]
+allow_resize_to_same_host=True
+scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,DiskFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter
+```
+
++ 重启服务：
+
+```bash
+$ systemctl restart openstack-nova-compute.service
+```
+
+##### Ubuntu系统
+
++ 编辑配置文件：
+
+```bash
+$ vim /etc/nova/nova.conf
+```
+
+```text
+[DEFAULT]
+allow_resize_to_same_host=True
+scheduler_default_filters=RetryFilter,AvailabilityZoneFilter,RamFilter,DiskFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter
+```
+
++ 重启服务：
+
+```bash
+$ service nova-compute restart
+```
+
+#### 免密操作
+
++ 使各节点的`nova`用户之间，可以通过密钥免密登录；
+
+##### 获取用户状态
+
+```bash
+$ cat /etc/passwd | grep nova
+```
+
+##### 允许用户登录
+
+```bash
+$ usermod -s /bin/bash nova
+```
+
+##### 为用户设置密码
+
+```bash
+$ echo 'nova:handge' | chpasswd
+```
+
+##### 免密操作
+
++ 仅在`Controller`节点执行，将公钥拷贝到其他计算节点；
+
+```bash
+$ su - nova
+$ ssh-keygen -t rsa -P '' > /dev/null 2>&1
+$ ssh-copy-id nova@{COMPUTE-SERVER}
+```
+
++ 将私钥也拷贝到其他计算节点；
+
+```bash
+$ su - root
+$ scp -r /var/lib/nova/.ssh {COMPUTE-SERVER}:/var/lib/nova/
+```
+
++ 测试各节点的`nova`用户之间能否免密登录
+
+```bash
+$ su - root
+$ ssh {COMPUTE-SERVER}
+```
 
 ### 热迁移
 
 + 热迁移：实时迁移，即将云主机的运行状态完整的保存下来，同时可以快速的恢复到原有的硬件平台，甚至是不同的硬件平台之上，云主机仍平滑运行，用户察觉不到任何差异。
-
-<!-- more -->
 
 #### OpenStack的热迁移
 
