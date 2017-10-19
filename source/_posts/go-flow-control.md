@@ -72,7 +72,7 @@ func main() {
     score := 80
     if score < 60 {
         fmt.Println("The score is less than 60 points.")
-    } else if 60 <= score < 80 {
+    } else if 60 <= score && score < 80 {
         fmt.Println("The score is greater than or equal to 60 points and less than 80 points.")
     } else {
         fmt.Println("The score is greater than or equal to 80 points.")
@@ -104,6 +104,29 @@ func main() {
     default:
         fmt.Printf("%s.", os)
     }
+}
+```
+
++ 没有条件的`switch`语句，这样可以简写`if/else`语句。
+
+```text
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	t := time.Now()
+	switch {
+	case t.Hour() < 12:
+		fmt.Println("Good morning!")
+	case t.Hour() < 17:
+		fmt.Println("Good afternoon.")
+	default:
+		fmt.Println("Good evening.")
+	}
 }
 ```
 
@@ -141,7 +164,7 @@ func main() {
 }
 ```
 
-+ 此时你也可以去掉分号，因此`C`语言中的`while`在`Go`语言中也叫做`while`。
++ 此时你也可以去掉分号，因此`C`语言中的`while`在`Go`语言中也叫做`for`。
 
 ```text
 package main

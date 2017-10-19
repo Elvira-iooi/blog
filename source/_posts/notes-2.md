@@ -69,6 +69,7 @@ $ certbot certonly --webroot -w <网站根目录> -d <域名> --agree-tos --emai
 
 ```bash
 $ certbot certonly --webroot -w /data/www -d www.xiaocoder.com --agree-tos --email xiao.950901@gmail.com
+$ certbot certonly --webroot -w /data/www -d www.xiaocoder.com -d www.xiaocoder.cn --agree-tos --email xiao.950901@gmail.com
 ```
 + 支持多个域名使用相同的证书，只需使用多个`-d`选项即可；
 + 暂不支持通配符域名，`*.example.com`；
@@ -97,6 +98,9 @@ $ openssl dhparam -out /etc/ssl/certs/dhparams.pem 2048
 server {
     listen 80;
     server_name www.xiaocoder.com;
+    location ~ /.well-known/acme-challenge {
+        allow all;
+    }
     return 301 https://$server_name$request_uri;
 }
 ```

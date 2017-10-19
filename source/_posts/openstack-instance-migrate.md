@@ -82,11 +82,12 @@ $ echo 'nova:handge' | chpasswd
 
 ##### 免密操作
 
-+ 仅在`Controller`节点执行，将公钥拷贝到其他计算节点；
++ 仅在`Controller`节点执行，将密钥对拷贝到其他计算节点；
 
 ```bash
 $ su - nova
-$ ssh-keygen -t rsa -P '' > /dev/null 2>&1
+$ ssh-keygen -t rsa -P '' &> /dev/null
+$ ssh-copy-id nova@{CONTROLLER-SERVER}
 $ ssh-copy-id nova@{COMPUTE-SERVER}
 ```
 
@@ -95,6 +96,7 @@ $ ssh-copy-id nova@{COMPUTE-SERVER}
 ```bash
 $ su - root
 $ scp -r /var/lib/nova/.ssh {COMPUTE-SERVER}:/var/lib/nova/
+$ chown -R nova:nova /var/lib/nova/.ssh/
 ```
 
 + 测试各节点的`nova`用户之间能否免密登录
@@ -161,7 +163,8 @@ $ vim /etc/nova/nova.conf
 ```text
 [libvirt]
 ...
-live_migration_flag="VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE,VIR_MIGRATE_PERSIST_DEST,VIR_MIGRATE_TUNNELLED"
+connection_uri = qemu+tcp://<本机的IP地址>/system
+live_migration_flag="VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE,VIR_MIGRATE_TUNNELLED"
 ```
 
 + 重启服务：
@@ -182,7 +185,7 @@ $ vim /etc/nova/nova.conf
 [libvirt]
 ...
 connection_uri = qemu+tcp://<本机的IP地址>/system
-live_migration_flag="VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE,VIR_MIGRATE_PERSIST_DEST,VIR_MIGRATE_TUNNELLED"
+live_migration_flag="VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE,VIR_MIGRATE_TUNNELLED"
 ```
 
 + 重启服务：
@@ -207,6 +210,7 @@ listen_tls = 0
 listen_tcp = 1
 
 tcp_port = "16509"
+
 # 本机的IP地址
 listen_addr = "172.18.21.1"
 
@@ -246,6 +250,7 @@ listen_tls = 0
 listen_tcp = 1
 
 tcp_port = "16509"
+
 # 本机的IP地址
 listen_addr = "172.18.21.1"
 

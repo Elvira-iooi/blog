@@ -290,6 +290,7 @@ images_rbd_ceph_conf = /etc/ceph/ceph.conf
 rbd_user = nova
 rbd_secret_uuid = UUID
 disk_cachemodes = "network=writeback"
+hw_disk_discard = unmap
 inject_password = true
 inject_key = true
 inject_partition = -2
