@@ -4,27 +4,63 @@
 
 1. Backup for Xiao's Blog.
 
-## 流程
+## 博客迁移主机流程
 
-+ 拉取博客
+### 配置Git
 
+```bash
+git config --global core.editor vim
+git config --global merge.tool vimdiff
+git config --global user.name "YuXiaoCoder"
+git config --global user.email "xiao.950901@gmail.com"
+git config --global color.ui true
 ```
+
+### 主机间免密通信
+
+```bash
+chmod 600 ~/.ssh/github
+chmod 600 ~/.ssh/xiaocoder
+```
+
+```bash
+vim ~/.ssh/config
+```
+
+```text
+Host github.com
+HostName github.com
+User YuXiao
+IdentityFile ~/.ssh/github
+
+Host 119.29.80.189
+HostName 119.29.80.189
+User root
+IdentityFile ~/.ssh/xiaocoder
+```
+
+```bash
+ssh -T git@github.com
+ssh root@119.29.80.189 echo 'Hello, Bloger!!!'
+```
+
+### 拉取博客
+
+```bash
+cd /
 git clone git@github.com:YuXiaoCoder/blog.git
 ```
 
-+ 切换目录
+### 拉取主题
 
-```
-cd blog/
-```
-
-+ 拉取主题
-
-```
+```bash
+cd /blog/
 git clone https://github.com/iissnan/hexo-theme-next themes/next
 ```
 
-## 个性化
+### 个性化
+
+#### 添加汉化字段
 
 + 文件：`themes/next/languages/zh-Hans.yml`
 
@@ -34,10 +70,12 @@ vim themes/next/languages/zh-Hans.yml
 
 + 内容：
 
-```
+```text
 menu:
   messages: 留言
 ```
+
+#### 添加站点特效
 
 + 文件：`themes/next/layout/_layout.swig`
 
@@ -47,7 +85,7 @@ vim themes/next/layout/_layout.swig
 
 + 内容：
 
-```
+```text
 <body>
     <script type="text/javascript" src="/js/src/particle.js"></script>
     <script type="text/javascript" src="/js/src/love.js"></script>
@@ -57,24 +95,16 @@ vim themes/next/layout/_layout.swig
 + 位置：`backup/js/ --> themes/next/source/js/src`
 
 ```bash
-cp backup/js/* themes/next/source/js/src/
+\cp -f backup/js/* themes/next/source/js/src/
 ```
 
-+ 文件：`themes/next/layout/_partials/head/external-fonts.swig`
-
-```bash
-vim themes/next/layout/_partials/head/external-fonts.swig
-```
-
-+ 内容：
-
-```text
-{% if font_families !== '' %}
-  {% set font_host = font_config.host | default('//fonts.lug.ustc.edu.cn') %}
-{% endif %}
-```
+#### 优化文章样式
 
 + 文件：`themes/next/source/css/_custom/custom.styl`
+
+```bash
+\cp -f backup/css/custom.styl themes/next/source/css/_custom/custom.styl
+```
 
 ```bash
 vim themes/next/source/css/_custom/custom.styl
@@ -84,6 +114,7 @@ vim themes/next/source/css/_custom/custom.styl
 
 ```text
 // Custom styles.
+
 //首页文章阴影样式
 .post {
   margin-top: 40px;
@@ -92,6 +123,7 @@ vim themes/next/source/css/_custom/custom.styl
   -webkit-box-shadow: 0 0 14px rgba(202, 203, 203, .5);
   -moz-box-shadow: 0 0 14px rgba(202, 203, 204, .5);
 }
+
 //侧栏按钮样式
 .sidebar-toggle {
     background: #649ab6;
@@ -99,6 +131,7 @@ vim themes/next/source/css/_custom/custom.styl
 .back-to-top {
     background: #649ab6;
 }
+
 //首页阅读全文样式
 .post-button {
     margin-top: 30px;
@@ -119,6 +152,7 @@ vim themes/next/source/css/_custom/custom.styl
 .post-button a:hover {
     color: #7784ba;
 }
+
 //文章目录样式
 .post-toc .nav .active>a {
     color: #4f7e96;
@@ -169,6 +203,7 @@ a {
     padding: 2px;
     border: 2px solid #333; 
 }
+
 // 旋转并放大头像
 .site-author-image:hover {
     -webkit-box-shadow: 0 0 10px rgba(0,0,0,.5);
@@ -185,7 +220,13 @@ a {
 }
 ```
 
+#### 优化链接颜色
+
 + 文件：`themes/next/source/css/_variables/base.styl`
+
+```bash
+\cp -f backup/css/base.styl themes/next/source/css/_variables/base.styl
+```
 
 ```bash
 vim themes/next/source/css/_variables/base.styl
@@ -201,10 +242,6 @@ $my-code-foreground = #DD0055  // 用``围出的代码块字体颜色
 $my-code-background = #EEE  // 用``围出的代码块背景颜色
 
 // Global link color.
-//$link-color                   = $black-light
-//$link-hover-color             = $black-deep
-//$link-decoration-color        = $grey-light
-//$link-decoration-hover-color  = $black-deep
 $link-color                   = $my-link-blue
 $link-hover-color             = $my-link-hover-blue
 $link-decoration-color        = $gray-lighter
@@ -213,9 +250,7 @@ $link-decoration-hover-color  = $my-link-hover-blue
 // Code & Code Blocks
 // --------------------------------------------------
 $code-font-family               = $font-family-monospace
-//$code-font-size                 = 13px
 $code-font-size                 = unit(hexo-config('font.codes.size'), px) if hexo-config('font.codes.size') is a 'unit'
-//$code-border-radius             = 3px
 $code-border-radius             = 4px
 //$code-foreground                = $black-light
 //$code-background                = $gainsboro
@@ -223,7 +258,13 @@ $code-background                = $my-code-background
 $code-foreground                = $my-code-foreground
 ```
 
+#### 使文章图片居中
+
 + 文件：`themes/next/source/css/_schemes/Mist/_posts-expanded.styl`
+
+```bash
+\cp -f backup/css/_posts-expanded.styl themes/next/source/css/_schemes/Mist/_posts-expanded.styl
+```
 
 ```bash
 vim themes/next/source/css/_schemes/Mist/_posts-expanded.styl
@@ -235,7 +276,13 @@ vim themes/next/source/css/_schemes/Mist/_posts-expanded.styl
 .post-body img {margin: 0 auto;}
 ```
 
+#### 添加站点页脚
+
 + 文件：`themes/next/layout/_partials/footer.swig`
+
+```bash
+\cp -f backup/layout/footer.swig themes/next/layout/_partials/footer.swig
+```
 
 ```bash
 vim themes/next/layout/_partials/footer.swig
@@ -249,29 +296,6 @@ vim themes/next/layout/_partials/footer.swig
   &nbsp;&nbsp;
   <a href="http://www.miitbeian.gov.cn/">蜀ICP备17004598号-1</a>
 </div>
-```
-
-## 主机间免密通信
-
-```bash
-chmod 600 ~/.ssh/github
-chmod 600 ~/.ssh/xiaocoder
-```
-
-```bash
-vim ~/.ssh/config
-```
-
-```text
-Host github.com
-HostName github.com
-User YuXiao
-IdentityFile ~/.ssh/github
-
-Host 119.29.80.189
-HostName 119.29.80.189
-User root
-IdentityFile ~/.ssh/xiaocoder
 ```
 
 ***
